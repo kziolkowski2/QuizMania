@@ -4,3 +4,4 @@ int 3 pytanie jezykowe, int 4 pytanie gdzie trzeba wpisac wlasna odpowiedz i wte
 3. Przerobic metode toString w question i questionSet zeby mozna bylo odpowiednio to wyswietlic
 4. W klasie quiz zrobic jedna metode gry ze switchem dla roznych questionType
 test
+test2
