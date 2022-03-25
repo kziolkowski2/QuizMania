@@ -1,0 +1,6 @@
+1. W klasie Qusetion dodanie inta(not null) ktory bedzie mowil o tym jaki jest to typ pytania np.int = 1 oznacz pytanie abcd, int = 2, pytanie wielokrotnego wyboru,
+int 3 pytanie jezykowe, int 4 pytanie gdzie trzeba wpisac wlasna odpowiedz i wtedy tez mozna dodac ograniczenie ze moze to byc wartosc od 1-np5 zazleznie ile typow pytan stworzymy
+2. Dodac zautomatyzowane logowanie i rozne typy konta np konto nauczyciel, konto uczen, konto admin z roznymi pozwoleniami
+3. Przerobic metode toString w question i questionSet zeby mozna bylo odpowiednio to wyswietlic
+4. W klasie quiz zrobic jedna metode gry ze switchem dla roznych questionType
+
