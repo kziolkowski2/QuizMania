@@ -3,4 +3,5 @@ int 3 pytanie jezykowe, int 4 pytanie gdzie trzeba wpisac wlasna odpowiedz i wte
 2. Dodac zautomatyzowane logowanie i rozne typy konta np konto nauczyciel, konto uczen, konto admin z roznymi pozwoleniami
 3. Przerobic metode toString w question i questionSet zeby mozna bylo odpowiednio to wyswietlic
 4. W klasie quiz zrobic jedna metode gry ze switchem dla roznych questionType
-
+test
+test2
