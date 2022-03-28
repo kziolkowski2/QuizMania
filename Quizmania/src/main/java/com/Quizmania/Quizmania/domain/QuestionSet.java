@@ -1,5 +1,6 @@
 package com.Quizmania.Quizmania.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import org.springframework.lang.Nullable;
 
@@ -30,9 +31,15 @@ public class QuestionSet {
     private LocalDate date; //data dodania
     @OneToMany
     private List<Question> questionList;
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "questionSet")
+    private Quiz quiz;
+
 
 //kontruktory gettery i settery jeszcze do ogarniecia
 
+
+    public QuestionSet() {
+    }
 
     public QuestionSet(@Nullable String name, CategoryEnum category, LanguageEnum language, LocalDate date, List<Question> questionList) {
         this.name = name;
