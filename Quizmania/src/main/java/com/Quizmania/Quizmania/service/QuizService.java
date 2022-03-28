@@ -23,5 +23,22 @@ public class QuizService {
         this.quizRepository = quizRepository;
     }
 
+    public void grantPoint() {
+        quizRepository.score++;
+    }
+
+    public void toggleMode() {
+        quizRepository.mode = quizRepository.!mode;
+        quizRepository.timeLimit = 0;
+        quizRepository.isTimed = false;
+    }
+
+    public void setTimeLimit(int timeLimit) {
+        quizRepository.timeLimit = timeLimit;
+        if(timeLimit > 0)
+            quizRepository.isTimed = true;
+        else
+            quizRepository.isTimed = false;
+    }
 
 }
