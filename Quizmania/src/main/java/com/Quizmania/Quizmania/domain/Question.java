@@ -17,22 +17,19 @@ public class Question {
     private String content;
     @NotNull
     private QuestionTypeEnum questionType;
-    @NotNull
-    private CategoryEnum category;
-    @NotNull
-    private LanguageEnum language;
     @ManyToOne
-    @JoinColumn(name = "questionSet_id") //moze byc problem z wielka litera w nazwie
-    private QuestionSet parentQuestionSet;
+    @JoinColumn(name = "quiz_id") //moze byc problem z wielka litera w nazwie
+    private Quiz parentQuiz;
     @OneToMany
     private List<Answer> answerList;
 
-    public Question(String content, QuestionTypeEnum questionType, CategoryEnum category, LanguageEnum language, QuestionSet parentQuestionSet, List<Answer> answerList) {
+    public Question() {
+    }
+
+    public Question(String content, QuestionTypeEnum questionType, Quiz parentQuiz, List<Answer> answerList) {
         this.content = content;
         this.questionType = questionType;
-        this.category = category;
-        this.language = language;
-        this.parentQuestionSet = parentQuestionSet;
+        this.parentQuiz = parentQuiz;
         this.answerList = answerList;
     }
 
@@ -60,28 +57,12 @@ public class Question {
         this.questionType = questionType;
     }
 
-    public CategoryEnum getCategory() {
-        return category;
+    public Quiz getParentQuiz() {
+        return parentQuiz;
     }
 
-    public void setCategory(CategoryEnum category) {
-        this.category = category;
-    }
-
-    public LanguageEnum getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(LanguageEnum language) {
-        this.language = language;
-    }
-
-    public QuestionSet getParentQuestionSet() {
-        return parentQuestionSet;
-    }
-
-    public void setParentQuestionSet(QuestionSet parentQuestionSet) {
-        this.parentQuestionSet = parentQuestionSet;
+    public void setParentQuiz(Quiz parentQuiz) {
+        this.parentQuiz = parentQuiz;
     }
 
     public List<Answer> getAnswerList() {
