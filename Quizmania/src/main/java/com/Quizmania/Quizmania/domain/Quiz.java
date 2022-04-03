@@ -1,54 +1,32 @@
 package com.Quizmania.Quizmania.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private boolean mode;
+    @Nullable
+    private String name; // nazwa zestawu
+    private boolean isActive;//on/off
     private int score;
     private int timeLimit;
-    private boolean isTimed;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "questionSet_id", referencedColumnName = "id")
-    private QuestionSet questionSet;
-
-    public Quiz() {
-    }
-
-    public Quiz(boolean mode, int timeLimit, boolean isTimed, QuestionSet questionSet) {
-        this.mode = mode;
-        this.score = 0;
-        this.timeLimit = timeLimit;
-        this.isTimed = isTimed;
-        this.questionSet = questionSet;
-    }
-    public void grantPoint() {
-        score++;
-    }
-
-    public void setTimeLimit(int timeLimit) {
-        this.timeLimit = timeLimit;
-        if(timeLimit > 0)
-            isTimed = true;
-        else
-            isTimed = false;
-    }
-
-    public void toggleMode() {
-        mode = !mode;
-        timeLimit = 0;
-        isTimed = false;
-    }
-    public void playQuiz(){
-        long startTime = System.currentTimeMillis();
-
-    }
+    @NotNull
+    private CategoryEnum category; // kategoria pyta�
+    @NotNull
+    private LanguageEnum language; // j�zyk pyta� i odpowiedzi w zestawie
+    @Nullable
+    private int popularity = 0;  //popularno�� (ilo�� wy�wietle�)
+    private LocalDate date; //data dodania
+    @OneToMany
+    private List<Question> questionList;
 
 
 //    public void playQuiz() {

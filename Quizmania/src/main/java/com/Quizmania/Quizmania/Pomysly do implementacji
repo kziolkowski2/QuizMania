@@ -1,7 +1,15 @@
-1. W klasie Qusetion dodanie inta(not null) ktory bedzie mowil o tym jaki jest to typ pytania np.int = 1 oznacz pytanie abcd, int = 2, pytanie wielokrotnego wyboru,
+(done)1. W klasie Qusetion dodanie inta(not null) ktory bedzie mowil o tym jaki jest to typ pytania np.int = 1 oznacz pytanie abcd, int = 2, pytanie wielokrotnego wyboru,
 int 3 pytanie jezykowe, int 4 pytanie gdzie trzeba wpisac wlasna odpowiedz i wtedy tez mozna dodac ograniczenie ze moze to byc wartosc od 1-np5 zazleznie ile typow pytan stworzymy
 2. Dodac zautomatyzowane logowanie i rozne typy konta np konto nauczyciel, konto uczen, konto admin z roznymi pozwoleniami
 3. Przerobic metode toString w question i questionSet zeby mozna bylo odpowiednio to wyswietlic
-4. W klasie quiz zrobic jedna metode gry ze switchem dla roznych questionType
-test
-test2
+4. Widoki
+5. Angular
+6. Funkcja play w javascripcie
+(done)7. polaczenie question set i quiz w jedno
+8. Adnotacje z permitami w kontrolerze @PreAuthorize
+9. Do zrobienia poniedzialek 4.04, quizController oraz widoki, potencjalnie jakas pierwotna funkcje gry w javascript
+10. Do zrobienia zaleznie od postepow 4.04 albo 5.04 dodac uzytkownikow i role.
+11. Webowe kontrollery formularze nowego quizu, nowego pytania, logowania, rejestracji.
+12. Szukanie po laguage, category, name.
+13. Dodanie pola createdBy w quizie i wyszukiwania po tym kto zrobil dany quiz.
+14. Mozliwosc dodawania pytan juz do istniejącego quizu

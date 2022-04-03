@@ -11,26 +11,14 @@ import java.util.*;
 public class QuizService {
     private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
-    private final QuestionSetRepository questionSetRepository;
     private final QuizRepository quizRepository;
 
     @Autowired
     public QuizService(AnswerRepository answerRepository, QuestionRepository questionRepository,
-                       QuestionSetRepository questionSetRepository, QuizRepository quizRepository) {
+                       QuizRepository quizRepository) {
         this.answerRepository = answerRepository;
         this.questionRepository = questionRepository;
-        this.questionSetRepository = questionSetRepository;
         this.quizRepository = quizRepository;
-    }
-
-    public void grantPoint() {
-        quizRepository.score++;
-    }
-
-    public void toggleMode() {
-        quizRepository.mode = quizRepository.!mode;
-        quizRepository.timeLimit = 0;
-        quizRepository.isTimed = false;
     }
 
     public void setTimeLimit(int timeLimit) {
@@ -39,6 +27,14 @@ public class QuizService {
             quizRepository.isTimed = true;
         else
             quizRepository.isTimed = false;
+    }
+    public void addQuestion(Question question) {
+        questionList.add(question);
+        question.setParentQuestionSet(this);
+    }
+
+    public void removeQuestion(int index) {
+        questionList.remove(index);
     }
 
 }

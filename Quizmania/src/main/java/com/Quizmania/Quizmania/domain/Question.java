@@ -92,14 +92,6 @@ public class Question {
         this.answerList = answerList;
     }
 
-    @Override
-    public String toString() {
-        return "Question{" +
-                "content='" + content + '\'' +
-                ", parentQuestionSet=" + parentQuestionSet +
-                ", answerList=" + answerList +
-                '}';
-    }
 //    public void shuffleAnswerList() {
 //        Collections.shuffle(answerList);
 //    }
