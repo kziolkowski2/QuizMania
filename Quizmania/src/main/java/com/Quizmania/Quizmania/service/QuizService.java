@@ -1,5 +1,7 @@
 package com.Quizmania.Quizmania.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.Quizmania.Quizmania.repository.*;
 import com.Quizmania.Quizmania.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
+@Transactional
 public class QuizService {
     private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
@@ -21,20 +24,28 @@ public class QuizService {
         this.quizRepository = quizRepository;
     }
 
-    public void setTimeLimit(int timeLimit) {
-        quizRepository.timeLimit = timeLimit;
-        if(timeLimit > 0)
-            quizRepository.isTimed = true;
-        else
-            quizRepository.isTimed = false;
-    }
-    public void addQuestion(Question question) {
-        questionList.add(question);
-        question.setParentQuestionSet(this);
+    public Page<Quiz> findAll(Pageable pageable) {
+        return quizRepository.findAll(pageable);
     }
 
-    public void removeQuestion(int index) {
-        questionList.remove(index);
+    public Quiz save(Quiz quiz) {
+        //quiz.setCreatedBy(user);
+        return quizRepository.save(quiz);
     }
+//    public void setTimeLimit(int timeLimit) {
+//        quizRepository.timeLimit = timeLimit;
+//        if(timeLimit > 0)
+//            quizRepository.isTimed = true;
+//        else
+//            quizRepository.isTimed = false;
+//    }
+//    public void addQuestion(Question question) {
+//        questionList.add(question);
+//        question.setParentQuestionSet(this);
+//    }
+//
+//    public void removeQuestion(int index) {
+//        questionList.remove(index);
+//    }
 
 }
