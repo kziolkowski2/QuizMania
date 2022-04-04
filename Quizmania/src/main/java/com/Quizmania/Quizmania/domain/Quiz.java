@@ -28,7 +28,8 @@ public class Quiz {
     @OneToMany
     private List<Question> questionList;
 
-
+    public Quiz() {
+    }
 //    public void playQuiz() {
 //        Scanner scanner = new Scanner(System.in);
 //        for(Question question : questionSet.questionList) {

@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quiz Mania</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+<div class="header">
+    <a class="logo" href="/">Quiz Mania</a>
+    <div class="header-right">
+        <a class="active" href="/">Home</a>
+        <a href="/Login/">Login</a>
+        <a href="/Register/">Register</a>
+    </div>
+</div>
+<h1>Quiz Mania</h1>
+<div class="btn_group">
+    <form action="/Search/" method="post">
+        <button class="start_btn">Start Quiz</button>
+    </form>
+    <form action="/Create/" method="post">
+        <button class="create_btn">Create Quiz</button>
+    </form>
+
+</div>
+</body>
+</html>
