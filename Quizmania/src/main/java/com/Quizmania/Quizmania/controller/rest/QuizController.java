@@ -18,6 +18,10 @@ public class QuizController {
     public Page<Quiz> findAll(Pageable pageable){
         return quizService.findAll(pageable);
     }
+    @PostMapping("")
+    void addQuiz(@RequestBody Quiz quiz){
+        quizService.save(quiz);
+    }
 
 //    @GetMapping("/search")
 //    public Page<Quiz>
