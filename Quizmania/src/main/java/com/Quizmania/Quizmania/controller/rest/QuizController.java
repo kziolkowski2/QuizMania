@@ -7,8 +7,10 @@ import com.Quizmania.Quizmania.domain.*;
 import com.Quizmania.Quizmania.service.QuizService;
 
 @RestController
+@RequestMapping(QuizController.ROOT_MAPPING)
 public class QuizController {
     final QuizService quizService;
+    public static final String ROOT_MAPPING = "/api/quizes";
 
     public QuizController(QuizService quizService){
         this.quizService = quizService;
