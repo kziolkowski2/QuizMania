@@ -1,5 +1,6 @@
 package com.Quizmania.Quizmania;
 
+import com.Quizmania.Quizmania.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,9 +14,9 @@ public class QuizmaniaApplication {
 		SpringApplication.run(QuizmaniaApplication.class, args);
 	}
 
-//	@Bean
-//	public CommandLineRunner setUpApp(@Autowired QuizService quizService) {
-//		return (args) -> quizService.initialize();
-//	}
+	@Bean
+	public CommandLineRunner setUpApp(@Autowired QuizService quizService) {
+		return (args) -> quizService.initialize();
+	}
 
 }

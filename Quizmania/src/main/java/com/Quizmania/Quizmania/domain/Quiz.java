@@ -26,7 +26,98 @@ public class Quiz {
     private int popularity = 0;  //popularno�� (ilo�� wy�wietle�)
     private LocalDate date; //data dodania
     @OneToMany
+    @JsonIgnore
     private List<Question> questionList;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Nullable
+    public String getName() {
+        return name;
+    }
+
+    public void setName(@Nullable String name) {
+        this.name = name;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getTimeLimit() {
+        return timeLimit;
+    }
+
+    public void setTimeLimit(int timeLimit) {
+        this.timeLimit = timeLimit;
+    }
+
+    public CategoryEnum getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryEnum category) {
+        this.category = category;
+    }
+
+    public LanguageEnum getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(LanguageEnum language) {
+        this.language = language;
+    }
+
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public List<Question> getQuestionList() {
+        return questionList;
+    }
+
+    public void setQuestionList(List<Question> questionList) {
+        this.questionList = questionList;
+    }
+
+    public Quiz(@Nullable String name, int timeLimit, CategoryEnum category, LanguageEnum language, LocalDate date, List<Question> questionList) {
+        this.name = name;
+        this.timeLimit = timeLimit;
+        this.category = category;
+        this.language = language;
+        this.date = date;
+        this.questionList = questionList;
+    }
 
     public Quiz() {
     }

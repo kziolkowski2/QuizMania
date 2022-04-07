@@ -6,25 +6,21 @@ import org.springframework.web.bind.annotation.*;
 import com.Quizmania.Quizmania.domain.*;
 import com.Quizmania.Quizmania.service.QuizService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(QuizController.ROOT_MAPPING)
 public class QuizController {
     final QuizService quizService;
-    public static final String ROOT_MAPPING = "/api/quizes";
+    public static final String ROOT_MAPPING = "/api/quizzes";
 
     public QuizController(QuizService quizService){
         this.quizService = quizService;
     }
 
     @GetMapping("")
-    public Page<Quiz> findAll(Pageable pageable){
-        return quizService.findAll(pageable);
-    }
-    @PostMapping("")
-    void addQuiz(@RequestBody Quiz quiz){
-        quizService.save(quiz);
+    public List<Quiz> findAll(){
+        return quizService.findAll();
     }
 
-//    @GetMapping("/search")
-//    public Page<Quiz>
 }

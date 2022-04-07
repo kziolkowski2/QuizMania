@@ -13,3 +13,5 @@ int 3 pytanie jezykowe, int 4 pytanie gdzie trzeba wpisac wlasna odpowiedz i wte
 12. Szukanie po laguage, category, name.
 13. Dodanie pola createdBy w quizie i wyszukiwania po tym kto zrobil dany quiz.
 14. Mozliwosc dodawania pytan juz do istniejącego quizu\\
+
+15. GetByKeyword, Sorting

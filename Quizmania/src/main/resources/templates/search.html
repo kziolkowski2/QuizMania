@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quiz Mania</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/search.css}">
+</head>
+<body>
+<div class="header">
+    <a class="logo" href="/">Quiz Mania</a>
+    <div class="header-right">
+        <a class="active" href="/">Home</a>
+        <a href="/login/">Login</a>
+        <a href="/register/">Register</a>
+    </div>
+</div>
+<div class="content">
+    <section class="search-panel">
+        <div class="search-box">
+            <div class="form">
+                <form th:action="@{/search}" >
+                    <input type="text" name="keyword" class="form-keyword">
+                    <input type="submit" value="Filter" class="quiz-btn">
+                </form>
+            </div>
+        </div>
+    </section>
+    <section class="quiz-panel">
+        <header class="panel-heading">
+            All quizzes
+        </header>
+
+        <table class="quiz-box">
+            <tbody>
+            <tr>
+                <th></th>
+                <th><i class="sort"></i> <a
+                        th:href="@{'/search/page/' + ${currentPage} + '/name?sortDir=' + ${reverseSortDir}}">Name</a>
+                </th>
+                <th><i class="quiz_category"></i> <a th:href="@{'/search/category?sortDir=' + ${reverseSortDir}}">Category</a></th>
+                <th><i class="quiz_language"></i> <a th:href="@{'/search/language?sortDir=' + ${reverseSortDir}}">Language</a></th>
+                <th><i class="quiz_date"></i> <a th:href="@{'/search/date?sortDir=' + ${reverseSortDir}}">Date</a></th>
+                <th><i class="quiz_popularity"></i> <a th:href="@{'/search/popularity?sortDir=' + ${reverseSortDir}}">Popularity</a></th>
+            </tr>
+            <tr th:each="quiz:${quizzes}">
+                <td><i class="quizzes"></i></td>
+                <td th:text="${quiz.name}"></td>
+                <td th:text="${quiz.category}"></td>
+                <td th:text="${quiz.language}"></td>
+                <td th:text="${quiz.date}"></td>
+                <td th:text="${quiz.popularity}"></td>
+                <td>
+                    <div class="btn-group">
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <footer style="font-size: large" class="page-panel">
+            <nav aria-label="Page navigation example">
+                Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
+
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" th:if="${currentPage > 1}"
+                           th:href="@{/parameters/countries/page/1}">First</a>
+                        <span th:unless="${currentPage > 1}">First</span>
+                    </li>
+
+                    <li class="page-item">
+                        <a th:if="${currentPage > 1}"
+                           th:href="@{'/parameters/countries/page/' + ${currentPage - 1}}">Previous</a>
+                        <span th:unless="${currentPage > 1}">Previous</span>
+                    </li>
+
+                    <li class="page-item">
+                    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                        <a th:href="@{'/parameters/countries/page/' + ${i}}">[[${i}]]</a>&nbsp; &nbsp;
+                    </span>
+                    </li>
+
+                    <li class="page-item">
+                        <a th:if="${currentPage < totalPages}"
+                           th:href="@{'/parameters/countries/page/' + ${currentPage + 1}}">Next</a>
+                        <span th:unless="${currentPage < totalPages}">Next</span>
+                    </li>
+
+                    <li class="page-item">
+                        <a th:if="${currentPage < totalPages}"
+                           th:href="@{'/parameters/countries/page/' + ${totalPages}}">Last</a>
+                        <span th:unless="${currentPage < totalPages}">Last</span>
+                    </li>
+                </ul>
+            </nav>
+
+        </footer>
+    </section>
+</div>
+</body>
+</html>

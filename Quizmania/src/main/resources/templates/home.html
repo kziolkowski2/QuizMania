@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/home.css}">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="header">
@@ -14,15 +16,55 @@
         <a href="/Register/">Register</a>
     </div>
 </div>
-<h1>Quiz Mania</h1>
-<div class="btn_group">
-    <form action="/Search/" method="post">
-        <button class="start_btn">Start Quiz</button>
-    </form>
-    <form action="/Create/" method="post">
-        <button class="create_btn">Create Quiz</button>
-    </form>
+<div class="container">
+
+    <div ng-controller="HomeCtrl">
+
+        <div>
+            <h1>Welcome to QuizZz!</h1>
+            <br/>
+        </div>
+
+        <table class="table table-hover" align="center">
+            <thead>
+            <tr>
+                <th width="70%">Quiz</th>
+                <th>Questions</th>
+                <th>Times played</th>
+                <th>Play!</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="quiz in quizzes">
+                <td>
+                    <h4>{{quiz.name}}</h4>
+                    <h5><small class="text-muted">{{quiz.description}}</small></h5>
+                </td>
+                <td>
+                    <p>20</p>
+                </td>
+                <td>
+                    <p>5033</p>
+                </td>
+                <td>
+                    <a href="/quiz/{{quiz.id}}" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="text-center">
+            <button class="btn btn-default" ng-click="loadNextPage()" ng-show="pagination.morePagesAvailable">Load more...</button>
+        </div>
+
+    </div>
 
 </div>
+<script src="http://cdn.jsdelivr.net/webjars/angularjs/1.3.8/angular.min.js"
+        th:src="@{/webjars/angularjs/1.3.8/angular.min.js}"></script>
+<script type="text/javascript" src="../static/js/homeApp.js"
+        th:src="@{/js/homeApp.js}"></script>
 </body>
 </html>

@@ -32,6 +32,7 @@ public class Answer {
         this.isCorrect = isCorrect;
     }
 
+    public Answer() {}
     public Long getId() {
         return id;
     }
