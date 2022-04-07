@@ -20,7 +20,7 @@
     <section class="search-panel">
         <div class="search-box">
             <div class="form">
-                <form th:action="@{/search}" >
+                <form th:action="@{/search}">
                     <input type="text" name="keyword" class="form-keyword">
                     <input type="submit" value="Filter" class="quiz-btn">
                 </form>
@@ -66,31 +66,31 @@
                 <ul class="pagination">
                     <li class="page-item">
                         <a class="page-link" th:if="${currentPage > 1}"
-                           th:href="@{/parameters/countries/page/1}">First</a>
+                           th:href="@{/search/1}">First</a>
                         <span th:unless="${currentPage > 1}">First</span>
                     </li>
 
                     <li class="page-item">
                         <a th:if="${currentPage > 1}"
-                           th:href="@{'/parameters/countries/page/' + ${currentPage - 1}}">Previous</a>
+                           th:href="@{'/search/' + ${currentPage - 1}}">Previous</a>
                         <span th:unless="${currentPage > 1}">Previous</span>
                     </li>
 
                     <li class="page-item">
                     <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-                        <a th:href="@{'/parameters/countries/page/' + ${i}}">[[${i}]]</a>&nbsp; &nbsp;
+                        <a th:href="@{'/search/' + ${i}}">[[${i}]]</a>&nbsp; &nbsp;
                     </span>
                     </li>
 
                     <li class="page-item">
                         <a th:if="${currentPage < totalPages}"
-                           th:href="@{'/parameters/countries/page/' + ${currentPage + 1}}">Next</a>
+                           th:href="@{'/search/' + ${currentPage + 1}}">Next</a>
                         <span th:unless="${currentPage < totalPages}">Next</span>
                     </li>
 
                     <li class="page-item">
                         <a th:if="${currentPage < totalPages}"
-                           th:href="@{'/parameters/countries/page/' + ${totalPages}}">Last</a>
+                           th:href="@{'/search/' + ${totalPages}}">Last</a>
                         <span th:unless="${currentPage < totalPages}">Last</span>
                     </li>
                 </ul>
