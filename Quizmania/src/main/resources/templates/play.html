@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quiz Mania</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/play.css}">
+</head>
+<body>
+<div class="header">
+    <a class="logo" href="/">Quiz Mania</a>
+    <div class="header-right">
+        <a class="active" href="/">Home</a>
+        <a href="/login/">Login</a>
+        <a href="/register/">Register</a>
+    </div>
+</div>
+<div class="quiz-box">
+    <div class="quiz-title" th:text="${quiz.name}"></div>
+    <section th:if="${session.questionIndex < #lists.size(quiz.questionList)}">
+
+        <div class="que-text" th:text="${quiz.questionList[session.questionIndex].content}" ></div>
+<!--        <div class="quiz-score" th:text="${session.score} + ' / ' + ${#lists.size(quiz.questionList)}" ></div>-->
+        <div class="option-list" th:each="answer : ${quiz.questionList[session.questionIndex].answerList}">
+            <form th:action="@{'/quiz/'+ ${quiz.id} + ${answer.isCorrect() ? '/play/increment' : '/play'} }" >
+                <button type="submit" value="<%= (isRight ? 1 : 0) %>" class="option" th:text="${answer.content}"></button>
+            </form>
+        </div>
+    </section>
+    <section>
+        <h2 class="result" th:text="${'Score: ' + session.score} + ' / ' + ${#lists.size(quiz.questionList)}"></h2>
+    </section>
+</div>
+</body>
+</html>
