@@ -109,7 +109,8 @@ section .option-list{
     padding: 20px 0px;
     display: block;
 }
-section .option-list .option{
+section .option-list .option, 
+section .option-list .review-option{
     max-width:800px;width:100%;
     text-align:left;
     margin-top:0px;
@@ -127,19 +128,10 @@ section .option-list .option{
     display: inline-block;
 }
 
-section .option_list button[value="1"]:active{
-    color: #155724;
-    background: #d4edda;
-    border: 1px solid #c3e6cb;
-}
 section .result{
     text-align:center;
 }
-section .option_list button[value="0"]:active{
-    color: #721c24;
-    background: #f8d7da;
-    border: 1px solid #f5c6cb;
-}
+
 section .option-list .option:last-child{
     margin-bottom: 0px;
 }
@@ -147,4 +139,14 @@ section .option-list .option:hover{
     color: #004085;
     background: #cce5ff;
     border: 1px solid #b8daff;
+}
+section .option-list .picked{
+    color: #721c24;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+section .option-list .correct{
+    color: #155724 !important; 
+    background: #d4edda !important;
+    border: 1px solid #c3e6cb !important;
 }

@@ -10,6 +10,8 @@ import com.Quizmania.Quizmania.service.QuizService;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -86,11 +88,25 @@ public class QuizWebController {
     public String playQuizInit(Model model,
                            @PathVariable("id") Long id, HttpSession session) {
         Quiz quiz = quizService.find(id).get();
-
+        List<String> givenAnswers = new ArrayList<String>();
+        session.setAttribute("givenAnswers", givenAnswers);
         session.setAttribute("questionIndex", -1);
         session.setAttribute("score", 0);
         model.addAttribute("quiz", quiz);
 
+        return "redirect:/quiz/{id}/play";
+    }
+    @PostMapping("/quiz/{id}/play/submit")
+    public String submit(@PathVariable("id") Long id,
+                         @RequestParam("isCorrect") Boolean isCorrect,
+                         @RequestParam("content") String content,
+                         HttpSession session){
+        if(isCorrect){
+            session.setAttribute("score", ((Integer)session.getAttribute("score"))+1);
+
+        }
+        ((List)session.getAttribute("givenAnswers")).add(content);
+        session.setAttribute("givenAnswers", session.getAttribute("givenAnswers"));
         return "redirect:/quiz/{id}/play";
     }
     @GetMapping("/quiz/{id}/play")
@@ -103,16 +119,5 @@ public class QuizWebController {
 
 
         return "play";
-    }
-    @GetMapping("/quiz/{id}/play/increment")
-    public String playQuizIncrement(Model model,
-                            @PathVariable("id") Long id, HttpSession session) {
-        Quiz quiz = quizService.find(id).get();
-
-        session.setAttribute("score", ((Integer)session.getAttribute("score"))+1);
-        model.addAttribute("quiz", quiz);
-        session.getAttribute("questionIndex");
-
-        return "redirect:/quiz/{id}/play";
     }
 }
