@@ -16,7 +16,7 @@ public class Quiz {
     @Nullable
     private String name; // nazwa zestawu
     private boolean isActive;//on/off
-    private int score = 0;
+    private int score;
     private int timeLimit;
     @NotNull
     private CategoryEnum category; // kategoria pyta�
@@ -120,9 +120,6 @@ public class Quiz {
     }
 
     public Quiz() {
-    }
-    public Quiz(@Nullable String name) {
-        this.name = name;
     }
 //    public void playQuiz() {
 //        Scanner scanner = new Scanner(System.in);
