@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quiz Mania</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/play.css}">
+</head>
+<body>
+<div class="header">
+    <a class="logo" href="/">Quiz Mania</a>
+    <div class="header-right">
+        <a class="active" href="/">Home</a>
+        <a href="/login/">Login</a>
+        <a href="/register/">Register</a>
+    </div>
+</div>
+<div class="quiz-box">
+    <div class="quiz-title" th:text="${quiz.name}"></div>
+    <section th:if="${session.questionIndex < #lists.size(quiz.questionList)}">
+
+        <div class="que-text" th:text="${quiz.questionList[session.questionIndex].content}" ></div>
+        <div class="option-list" th:each="answer : ${quiz.questionList[session.questionIndex].answerList}">
+            <form th:action="@{'/quiz/'+ ${quiz.id} +'/play/submit'}" th:object="${answer}" method="post" >
+                <input type="hidden" name="isCorrect" th:value="*{isCorrect}" />
+                <input type="hidden" name="content" th:value="*{content}" />
+                <button type="submit" class="option" th:text="${answer.content}"></button>
+            </form>
+        </div>
+    </section>
+    <section th:unless="${session.questionIndex < #lists.size(quiz.questionList)}">
+        <div class="quiz-title" th:text="${quiz.name}"></div>
+        <h2 class="result" th:text="${'Score: ' + session.score} + ' / ' + ${#lists.size(quiz.questionList)}"></h2>
+        <div class="option-list" th:each="question : ${quiz.questionList}">
+            <div class="que-text" th:text="${question.content}"></div>
+            <div class="option-list" th:each="answer : ${question.answerList}">
+                <div class="review-option" th:classappend="|((${session.givenAnswers[questionStat.index]} eq ${answer.content}) ? 'picked' : ''), 
+                (${answer.isCorrect()} ? 'correct' : '')|" 
+                     th:text="${answer.content}"></div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
