@@ -13,6 +13,7 @@ import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class QuizWebController {
@@ -108,7 +109,21 @@ public class QuizWebController {
         ((List)session.getAttribute("givenAnswers")).add(content);
         session.setAttribute("givenAnswers", session.getAttribute("givenAnswers"));
         return "redirect:/quiz/{id}/play";
+    } 
+    @PostMapping("/quiz/{id}/play/submitopen")
+    public String submitOpen(@PathVariable("id") Long id,
+                         @RequestParam("content") String content,
+                         HttpSession session){
+        Quiz quiz = quizService.find(id).get();
+
+        if(quiz.getQuestionList().get((Integer)session.getAttribute("questionIndex")).getAnswerList().stream().anyMatch(a -> a.getContent().equals(content))){
+            session.setAttribute("score", ((Integer)session.getAttribute("score"))+1);
+        }
+        ((List)session.getAttribute("givenAnswers")).add(content);
+        session.setAttribute("givenAnswers", session.getAttribute("givenAnswers"));
+        return "redirect:/quiz/{id}/play";
     }
+    
     @GetMapping("/quiz/{id}/play")
     public String playQuiz(Model model,
                            @PathVariable("id") Long id, HttpSession session) {

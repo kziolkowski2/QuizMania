@@ -91,9 +91,9 @@ public class QuizService {
         List<Answer> answers1 = new ArrayList<>();
         List<Answer> answers2 = new ArrayList<>();
         List<Answer> answers3 = new ArrayList<>();
-        Question question1 = new Question("Ile to 1+1?", QuestionTypeEnum.OPEN, quiz1, answers1);
-        Question question2 = new Question("Ile to 4/2?", QuestionTypeEnum.OPEN, quiz1, answers2);
-        Question question3 = new Question("Ile to 3-3?", QuestionTypeEnum.OPEN, quiz1, answers2);
+        Question question1 = new Question("Ile to 1+1?", QuestionTypeEnum.CLOSED, quiz1, answers1);
+        Question question2 = new Question("Ile to 4/2?", QuestionTypeEnum.CLOSED, quiz1, answers2);
+        Question question3 = new Question("Ile to 3-3?", QuestionTypeEnum.OPEN, quiz1, answers3);
 
         //Question question3 = new Question("question3", QuestionTypeEnum.OPEN, quiz2, answers2);
         //Question question4 = new Question("question4", QuestionTypeEnum.OPEN, quiz2, answers2);
@@ -106,9 +106,9 @@ public class QuizService {
         Answer answer5 = new Answer("8", false, question2);
         Answer answer6 = new Answer("1", false, question2);
 
-        Answer answer7 = new Answer("0", true, question2);
-        Answer answer8 = new Answer("1", false, question2);
-        Answer answer9 = new Answer("3", false, question2);
+        Answer answer7 = new Answer("0", true, question3);
+        //Answer answer8 = new Answer("1", false, question2);
+        //Answer answer9 = new Answer("3", false, question2);
 
         answers1.add(answer1);
         answers1.add(answer2);
@@ -119,8 +119,8 @@ public class QuizService {
         answers2.add(answer6);
 
         answers3.add(answer7);
-        answers3.add(answer8);
-        answers3.add(answer9);
+        //answers3.add(answer8);
+        //answers3.add(answer9);
 
         question1.setAnswerList(answers1);
         question2.setAnswerList(answers2);
@@ -143,8 +143,8 @@ public class QuizService {
         answerRepository.save(answer5);
         answerRepository.save(answer6);
         answerRepository.save(answer7);
-        answerRepository.save(answer8);
-        answerRepository.save(answer9);
+        //answerRepository.save(answer8);
+        //answerRepository.save(answer9);
 
         questionRepository.save(question1);
         questionRepository.save(question2);

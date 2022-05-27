@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
 *{
     margin: 0;
     padding: 0;
@@ -55,19 +56,17 @@ body{
 }
 
 .quiz-box{
-    margin: 50px auto;
     display:block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    margin-top: 10%;
+    margin-left: 50%;
+    transform: translate(-50%, -10%);
+
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width: 700px;
     background: #fff;
     border-radius: 5px;
-    height:auto;
-
 
 }
 .quiz-title{
@@ -109,7 +108,7 @@ section .option-list{
     padding: 20px 0px;
     display: block;
 }
-section .option-list .option, 
+section .option-list .option,
 section .option-list .review-option{
     max-width:800px;width:100%;
     text-align:left;
@@ -125,7 +124,7 @@ section .option-list .review-option{
     align-items: center;
     justify-content: space-between;
     word-wrap: break-word;
-    display: inline-block;
+    display:flex;
 }
 
 section .result{
@@ -146,7 +145,7 @@ section .option-list .picked{
     border: 1px solid #f5c6cb;
 }
 section .option-list .correct{
-    color: #155724 !important; 
+    color: #155724 !important;
     background: #d4edda !important;
     border: 1px solid #c3e6cb !important;
 }
