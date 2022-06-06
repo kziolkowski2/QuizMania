@@ -2,6 +2,7 @@ package com.Quizmania.Quizmania.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,13 +18,24 @@ public class Question {
     private String content;
     @NotNull
     private QuestionTypeEnum questionType;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "quiz_id") //moze byc problem z wielka litera w nazwie
     private Quiz parentQuiz;
-    @OneToMany
-    private List<Answer> answerList;
+    @JsonIgnore
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    private List<Answer> answerList = new ArrayList<>();
 
     public Question() {
+        this.content = "";
+        this.questionType = QuestionTypeEnum.CLOSED;
+        List<Answer> tempAnswerList = new ArrayList<>();
+        this.answerList = tempAnswerList;
+        }
+
+    public Question(String content, QuestionTypeEnum questionType, List<Answer> answerList) {
+        this.content = content;
+        this.questionType = questionType;
+        this.answerList = answerList;
     }
 
     public Question(String content, QuestionTypeEnum questionType, Quiz parentQuiz, List<Answer> answerList) {
@@ -32,6 +44,7 @@ public class Question {
         this.parentQuiz = parentQuiz;
         this.answerList = answerList;
     }
+
 
     public Long getId() {
         return id;
@@ -73,17 +86,12 @@ public class Question {
         this.answerList = answerList;
     }
 
-//    public void shuffleAnswerList() {
-//        Collections.shuffle(answerList);
-//    }
+    public void addAnswerToList(Answer answer){
+        this.answerList.add(answer);
+    }
+    public void addAnswerToListString(String content,String isCorrect){
+        this.answerList.add(new Answer(content,isCorrect));
+    }
 
-//    public void showQuestion() {
-//        String output = "////////////////////\n" + content + "\n";
-//        shuffleAnswerList();
-//        int i = 0;
-//        for(Answer answer : answerList) {
-//            output += ++i + ") " + answer.toString() + "\n";
-//        }
-//        System.out.println(output);
-//    }
+
 }

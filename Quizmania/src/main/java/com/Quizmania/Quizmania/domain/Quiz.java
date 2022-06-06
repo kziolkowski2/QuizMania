@@ -6,6 +6,7 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,9 +26,38 @@ public class Quiz {
     @Nullable
     private int popularity = 0;  //popularno�� (ilo�� wy�wietle�)
     private LocalDate date; //data dodania
-    @OneToMany
     @JsonIgnore
+    @OneToMany
+    @JoinColumn (name = "quiz_id")
     private List<Question> questionList;
+
+    public Quiz() {
+        this.name = "";
+        this.isActive = false;
+        this.timeLimit = 0;
+        this.category = CategoryEnum.MATEMATYKA;
+        this.language = LanguageEnum.PL;
+        this.popularity = 0;
+        this.date = LocalDate.now();
+        List<Question> tempQuestionList = new ArrayList<>();
+        this.questionList = tempQuestionList;
+    }
+    public Quiz(@Nullable String name, int timeLimit, CategoryEnum category, LanguageEnum language, LocalDate date, List<Question> questionList) {
+        this.name = name;
+        this.timeLimit = timeLimit;
+        this.category = category;
+        this.language = language;
+        this.date = date;
+        this.questionList = questionList;
+    }
+    public Quiz(@Nullable String name) {
+        this.name = name;
+    }
+
+
+    public void addQuestionToList(Question question){
+        this.questionList.add(question);
+    }
 
     public Long getId() {
         return id;
@@ -110,20 +140,7 @@ public class Quiz {
         this.questionList = questionList;
     }
 
-    public Quiz(@Nullable String name, int timeLimit, CategoryEnum category, LanguageEnum language, LocalDate date, List<Question> questionList) {
-        this.name = name;
-        this.timeLimit = timeLimit;
-        this.category = category;
-        this.language = language;
-        this.date = date;
-        this.questionList = questionList;
-    }
 
-    public Quiz() {
-    }
-    public Quiz(@Nullable String name) {
-        this.name = name;
-    }
 //    public void playQuiz() {
 //        Scanner scanner = new Scanner(System.in);
 //        for(Question question : questionSet.questionList) {

@@ -13,13 +13,18 @@ public class Answer {
     private String content;
     @NotNull
     private boolean isCorrect;//do dodania relacje z odpowiedziami itp
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "question_id")
     private Question question;
 
 
 //kontruktory gettery i settery jeszcze do ogarniecia
 
+    public Answer() {
+        this.content = "";
+        this.isCorrect = false;
+        this.question = getQuestion();
+    }
 
     public Answer(String content, boolean isCorrect, Question question) {
         this.content = content;
@@ -31,8 +36,13 @@ public class Answer {
         this.content = content;
         this.isCorrect = isCorrect;
     }
+    public Answer(String content, String isCorrect) {
+        this.content = content;
+        boolean b = Boolean.parseBoolean(isCorrect);
+        this.isCorrect = b;
+    }
 
-    public Answer() {}
+
     public Long getId() {
         return id;
     }

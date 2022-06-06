@@ -3,17 +3,15 @@ package com.Quizmania.Quizmania.controller.web;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import com.Quizmania.Quizmania.domain.*;
 import com.Quizmania.Quizmania.service.QuizService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class QuizWebController {
@@ -26,13 +24,39 @@ public class QuizWebController {
     public String home() { return "home"; }
 
     @GetMapping("/create")
-    public String create() { return "home"; }
+    public String creation(){
+        return "create";
+    }
 
-    @PostMapping("/create")
-    public String create(Quiz quiz, BindingResult bindingResult,Model model){
-        Quiz newQuiz;
-        newQuiz = quizService.save(quiz);
-        return "createQuiz";
+    @GetMapping("/createQuiz")
+    public String createQuizForm(Model model) {
+        List<Question> questionList = quizService.findAllUnassignedQuestions();
+        model.addAttribute("questionList",questionList);
+        model.addAttribute("quiz",new Quiz());
+
+        return "createQuiz"; }
+
+    @PostMapping("/createQuiz/save")
+    public String createQuizPost(Quiz quiz){
+        quizService.save(quiz);
+        return "redirect:/search";
+    }
+    @GetMapping("/createQuestion")
+    public String createQuestionForm(Model model){
+        model.addAttribute("question",new Question());
+        return"createQuestion";
+
+    }
+    @PostMapping("/createQuestion/save")
+    public String createQuestionPost(Question question, HttpServletRequest request){
+        String[] answersContent = request.getParameterValues("answerContent");
+        String[] isCorrect = request.getParameterValues("answerIsCorrect");
+        for(int i= 0; i < 3; i++){
+            question.addAnswerToListString(answersContent[i],isCorrect[i]);
+        }
+        quizService.save(question);
+
+        return "redirect:/createQuiz";
     }
     @GetMapping("/search/{pageNumber}")
     public String getSearchPage(Model model, @PathVariable("pageNumber") int currentPage,
