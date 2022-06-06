@@ -30,7 +30,7 @@ public class Question {
         this.questionType = QuestionTypeEnum.CLOSED;
         List<Answer> tempAnswerList = new ArrayList<>();
         this.answerList = tempAnswerList;
-        }
+    }
 
     public Question(String content, QuestionTypeEnum questionType, List<Answer> answerList) {
         this.content = content;

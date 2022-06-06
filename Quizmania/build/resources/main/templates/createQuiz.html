@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Quiz</title>
+    <link rel="stylesheet" th:href="@{/css/create.css}">
+
+</head>
+<body>
+<div class="header">
+    <a class="logo" href="/">Quiz Mania</a>
+    <div class="header-right">
+        <a class="active" href="/">Home</a>
+        <a href="/Login/">Login</a>
+        <a href="/Register/">Register</a>
+    </div>
+</div>
+<div class="create_box">
+</div>
+<form action="#" th:action="@{'/createQuiz/save'}" th:object="${quiz}" method="post">
+    <div class="form-group">
+        <div class="form-group row"><label>Name</label>
+            <input type="text" th:field="${quiz.name}">
+        </div>
+
+        <div class="form-group row"><label>Questions choose multiple</label>
+            <select th:field="${questionList}" class="form-control" multiple="multiple" required>
+                <th:block th:each="que:${questionList}">
+                    <option th:text="${que.content}" th:value="${que.Id}"/>
+                </th:block>
+            </select>
+        </div>
+
+
+
+
+
+        <button type="submit">Submit</button>
+    </div>
+</form>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Quiz</title>
+    <link rel="stylesheet" th:href="@{/css/create.css}">
+
+</head>
+<body>
+<div class="header">
+    <a class="logo" href="/">Quiz Mania</a>
+    <div class="header-right">
+        <a class="active" href="/">Home</a>
+        <a href="/Login/">Login</a>
+        <a href="/Register/">Register</a>
+    </div>
+</div>
+<div class="container text-center">
+    <div><h1>Creation Tool</h1></div>
+    <form th:action="@{/createQuiz}">
+        <button class="btn">Create Quiz</button>
+    </form>
+    <form th:action="@{/createQuestion}">
+        <button class="btn">Add New Question</button>
+    </form>
+
+</div>
+</body>
+
+</html>
