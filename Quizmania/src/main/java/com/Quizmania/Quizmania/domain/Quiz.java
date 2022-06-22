@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 @Entity
 public class Quiz {
     @Id
@@ -16,9 +15,10 @@ public class Quiz {
     private Long id;
     @Nullable
     private String name; // nazwa zestawu
-    private boolean isActive;//on/off
-    private int score = 0;
-    private int timeLimit;
+    @Nullable
+    private float timeLimit;
+    @NotNull
+    private int maxPoints;
     @NotNull
     private CategoryEnum category; // kategoria pyta�
     @NotNull
@@ -33,7 +33,6 @@ public class Quiz {
 
     public Quiz() {
         this.name = "";
-        this.isActive = false;
         this.timeLimit = 0;
         this.category = CategoryEnum.MATEMATYKA;
         this.language = LanguageEnum.PL;
@@ -42,13 +41,14 @@ public class Quiz {
         List<Question> tempQuestionList = new ArrayList<>();
         this.questionList = tempQuestionList;
     }
-    public Quiz(@Nullable String name, int timeLimit, CategoryEnum category, LanguageEnum language, LocalDate date, List<Question> questionList) {
+    public Quiz(@Nullable String name, float timeLimit, CategoryEnum category, LanguageEnum language, LocalDate date, List<Question> questionList) {
         this.name = name;
         this.timeLimit = timeLimit;
         this.category = category;
         this.language = language;
         this.date = date;
         this.questionList = questionList;
+        this.maxPoints = questionList.stream().mapToInt(q -> q.getPoints()).sum();
     }
     public Quiz(@Nullable String name) {
         this.name = name;
@@ -75,28 +75,16 @@ public class Quiz {
     public void setName(@Nullable String name) {
         this.name = name;
     }
+    
+    public int getMaxPoints() { return maxPoints;}
 
-    public boolean isActive() {
-        return isActive;
-    }
+    public void setMaxPoints(int maxPoints) { this.maxPoints = maxPoints; }
 
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public int getTimeLimit() {
+    public float getTimeLimit() {
         return timeLimit;
     }
 
-    public void setTimeLimit(int timeLimit) {
+    public void setTimeLimit(float timeLimit) {
         this.timeLimit = timeLimit;
     }
 
@@ -123,6 +111,8 @@ public class Quiz {
     public void setPopularity(int popularity) {
         this.popularity = popularity;
     }
+    
+    public void incrementPopularity() { this.popularity += 1;}
 
     public LocalDate getDate() {
         return date;
@@ -138,32 +128,9 @@ public class Quiz {
 
     public void setQuestionList(List<Question> questionList) {
         this.questionList = questionList;
+        this.maxPoints = questionList.stream().mapToInt(q -> q.getPoints()).sum();
     }
 
 
-//    public void playQuiz() {
-//        Scanner scanner = new Scanner(System.in);
-//        for(Question question : questionSet.questionList) {
-//            question.showQuestion();
-//            String scannerAnswer = scanner.nextLine();
-//            if (question.correctAnswerList.contains(scannerAnswer))
-//                grantPoint();
-//            System.out.println("Score: " + score + "\n");
-//        }
-//
-//        float accuracy = score / questionSet.questionList.size(); //ewentualna aktualizacja i wy�wietlenie trafno�ci w procentach
-//        if(accuracy > questionSet.accuracy)
-//            questionSet.setAccuracy(accuracy);
-//        System.out.println("Accuracy: " + accuracy * 100 + "% | " + "Best accuracy: "
-//                + questionSet.accuracy * 100 + "%" + "\n");
-//        questionSet.setPopularity(questionSet.getPopularity() + 1); // zwi�kszenie ilo�ci wy�wietle� o jeden
-//        System.out.println("Rate this flashcard set from 1 to 10 \n"); //ocena quizu
-//        int rating = scanner.nextInt();
-//        if (rating > 10)
-//            rating = 10;
-//        if (rating < 1)
-//            rating = 1;
-//        questionSet.setRating(rating);
-//        scanner.close();
-//    }
+
 }

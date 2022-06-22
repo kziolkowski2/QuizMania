@@ -54,7 +54,8 @@
 }
 
 body{
-    background: #007bff;
+    /*background: #007bff;*/
+    background: dodgerblue;
 }
 
 h1{

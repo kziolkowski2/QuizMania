@@ -2,7 +2,8 @@ package com.Quizmania.Quizmania.domain;
 
 public enum QuestionTypeEnum {
     OPEN("open"),
-    CLOSED("closed");
+    SINGLE("single"),
+    MULTIPLE("multiple");
 
     private final String text;
 

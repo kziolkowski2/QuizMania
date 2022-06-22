@@ -23,7 +23,7 @@
     font-size: 24px;
     line-height: 25px;
     border-radius: 4px;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-out;
 }
 
 .header a.logo {
@@ -52,19 +52,19 @@
     float: right;
 }
 body{
-    background: #007bff;
+    background: dodgerblue;
 }
 
 .quiz-box{
     display:block;
     position: relative;
-    margin-top: 10%;
+    margin-top: 8%;
     margin-left: 50%;
     transform: translate(-50%, -10%);
 
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 700px;
+    width: 900px;
     background: #fff;
     border-radius: 5px;
 
@@ -88,17 +88,41 @@ body{
 }
 
 section{
+    border-radius: 5px;
     padding: 25px 30px 20px 30px;
     background: #fff;
 }
 .quiz-box .que-text{
-    font-size: 35px;
+    font-size: 30px;
     display:flex;
     font-weight: 600;
     max-width:650px;
     word-wrap: break-word;
     display: inline-block;
+    margin-bottom:15px;
+}
 
+.que-title{
+    font-weight:500;
+
+    font-size: 20px;
+    align-items: center;
+    justify-content: space-between;
+    display:flex;
+}
+
+.points-text{
+    font-size: 20px;
+    margin-top:20px;
+    display:flex;
+    font-weight: 600;
+    max-width:650px;
+    word-wrap: break-word;
+    display: inline-block;
+}
+.que-header{
+    justify-content: space-between;
+    display:flex;
 }
 .quiz-box .quiz-score{
     font-size: 20px;
@@ -108,44 +132,94 @@ section .option-list{
     padding: 20px 0px;
     display: block;
 }
+input[type="checkbox"]  {
+    visibility: hidden;
+}
+input[type="radio"]  {
+    visibility: hidden;
+}
 section .option-list .option,
-section .option-list .review-option{
-    max-width:800px;width:100%;
+section .option-list .review-option,
+section .option-list a{
+    max-width:900px;width:100%;
     text-align:left;
     margin-top:0px;
     background: aliceblue;
     border: 1px solid #84c5fe;
+    transform: scale(1.01) ;
+
     border-radius: 5px;
     padding: 8px 15px;
+    margin-bottom:-5px;
     font-size: 20px;
-    margin-bottom: 15px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s cubic-bezier(0.25, 0.1, 0.26, 1.03);
     align-items: center;
     justify-content: space-between;
     word-wrap: break-word;
     display:flex;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)
 }
 
+section .option-list .review-option{
+    border: 0px
+
+}
+.option:checked + a {
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.24);
+    transform: scale(1) !important;
+
+    background: #8ecaff !important;
+
+    border: 1px solid dodgerblue !important;
+
+}
+section .option-list .option:last-child + a{
+    margin-bottom: 0px;
+}
+section .option-list .option:hover + a{
+    transform: scale(1.02);
+    background: #d8ebff;
+    border: 1px solid #b8daff;
+}
+section  button {
+    outline: none;
+    border: none;
+    margin:0 auto;
+    margin-top:40px;
+    display:block;
+    padding: 8px;
+    padding-left:20px;
+    padding-right:20px;
+    background-color: dodgerblue;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+    line-height: 25px;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2),
+    0 1px 2px 0 rgba(0, 0, 0, 0.19);
+    transition: all 0.3s ease-in-out;
+}
+section  button:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
 section .result{
     text-align:center;
 }
 
-section .option-list .option:last-child{
-    margin-bottom: 0px;
-}
-section .option-list .option:hover{
-    color: #004085;
-    background: #cce5ff;
-    border: 1px solid #b8daff;
-}
 section .option-list .picked{
-    color: #721c24;
-    background: #f8d7da;
-    border: 1px solid #f5c6cb;
+    transform: scale(1.03) ;
 }
 section .option-list .correct{
     color: #155724 !important;
     background: #d4edda !important;
-    border: 1px solid #c3e6cb !important;
+    border: 1.7px solid #43d263 !important;
 }
+section .option-list .wrong{
+    color: #721c24;
+    background: #f8d7da;
+    border: 1.7px solid #ff273e;
+}
+

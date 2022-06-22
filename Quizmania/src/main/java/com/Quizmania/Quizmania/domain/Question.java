@@ -18,6 +18,8 @@ public class Question {
     private String content;
     @NotNull
     private QuestionTypeEnum questionType;
+    @NotNull
+    private int points;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "quiz_id") //moze byc problem z wielka litera w nazwie
     private Quiz parentQuiz;
@@ -27,7 +29,7 @@ public class Question {
 
     public Question() {
         this.content = "";
-        this.questionType = QuestionTypeEnum.CLOSED;
+        this.questionType = QuestionTypeEnum.SINGLE;
         List<Answer> tempAnswerList = new ArrayList<>();
         this.answerList = tempAnswerList;
     }
@@ -38,7 +40,8 @@ public class Question {
         this.answerList = answerList;
     }
 
-    public Question(String content, QuestionTypeEnum questionType, Quiz parentQuiz, List<Answer> answerList) {
+    public Question(String content, QuestionTypeEnum questionType, int points, Quiz parentQuiz, List<Answer> answerList) {
+        this.points = points;
         this.content = content;
         this.questionType = questionType;
         this.parentQuiz = parentQuiz;
@@ -53,6 +56,10 @@ public class Question {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public int getPoints() { return points; }
+
+    public void setPoints(int points) { this.points = points; }
 
     public String getContent() {
         return content;

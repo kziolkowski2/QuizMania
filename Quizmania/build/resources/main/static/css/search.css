@@ -51,7 +51,8 @@
     float: right;
 }
 body{
-    background: #007bff;
+    /*background: #007bff;*/
+    background: dodgerblue;
 }
 
 .search-form{
@@ -178,6 +179,8 @@ body{
     border-bottom: 1px solid #dddddd;
 }
 .quiz-table tbody tr:hover {
+    transition: all 0.1s ease-in-out;
+
     text-shadow: 0.03ex 0, 0.03ex 0;
     background-color: #d8ebff;
 
