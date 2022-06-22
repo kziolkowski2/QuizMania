@@ -151,11 +151,11 @@ public class QuizService {
         quizRepository.save(quiz13);
         quizRepository.save(quiz14);
         quizRepository.save(quiz15);
-        
+
         questionRepository.save(question1);
         questionRepository.save(question2);
         questionRepository.save(question3);
-        
+
         answerRepository.save(answer1);
         answerRepository.save(answer2);
         answerRepository.save(answer3);
@@ -165,10 +165,10 @@ public class QuizService {
         answerRepository.save(answer7);
         //answerRepository.save(answer8);
         //answerRepository.save(answer9);
-        
+
         //questionRepository.save(question3);
         //questionRepository.save(question4);
-        
+
 
     }
 

@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Quiz Mania</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/play.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     
 </head>
 <body>
@@ -15,14 +14,19 @@
     <a class="logo" href="/">Quiz Mania</a>
     <div class="header-right">
         <a class="active" href="/">Home</a>
-        <a href="/login/">Login</a>
-        <a href="/register/">Register</a>
+        <div sec:authorize="isAnonymous()">
+            <a href="/login/">Login</a>
+            <a href="/register/">Register</a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}">Log out</a>
+        </div>
     </div>
 </div>
 <div class="quiz-box">
     <div class="quiz-title" th:text="${quiz.name}"></div>
     <input type="hidden" id="indx" value="${session.questionIndex}" />
-    
+
     <section>
         <div class="que-title">
             <div class="que-text" th:text="${quiz.questionList[session.questionIndex].content}" ></div>
@@ -73,14 +77,14 @@
     let time = sessionStorage.getItem("time");
     let timeLimit = time;
     let circleSize = 283;
-    
+
     update();
     timerInterval = setInterval(update, 1000);
-    
+
     function update(){
       const minutes= Math.floor(time / 60);
       let seconds = time % 60;
-      
+
       seconds = seconds < 10 ? '0' + seconds : seconds;
 
       document.getElementById('countdown-number').innerHTML = minutes + ":" + seconds;
@@ -90,7 +94,7 @@
       }
       sessionStorage.setItem("time", time)
     }
-    
+
 </script>
 </body>
 </html>

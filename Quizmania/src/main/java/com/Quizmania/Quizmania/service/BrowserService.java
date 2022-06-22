@@ -21,7 +21,7 @@ public class BrowserService {
 
     @Autowired
     public BrowserService(AnswerRepository answerRepository, QuestionRepository questionRepository,
-                       QuizRepository quizRepository) {
+                          QuizRepository quizRepository) {
         this.answerRepository = answerRepository;
         this.questionRepository = questionRepository;
         this.quizRepository = quizRepository;

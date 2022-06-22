@@ -75,7 +75,7 @@ public class Quiz {
     public void setName(@Nullable String name) {
         this.name = name;
     }
-    
+
     public int getMaxPoints() { return maxPoints;}
 
     public void setMaxPoints(int maxPoints) { this.maxPoints = maxPoints; }
@@ -111,7 +111,7 @@ public class Quiz {
     public void setPopularity(int popularity) {
         this.popularity = popularity;
     }
-    
+
     public void incrementPopularity() { this.popularity += 1;}
 
     public LocalDate getDate() {

@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Quiz Mania</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/home.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 </head>
 <body>
 <div class="header">
-    <a class="logo" href="">Quiz Mania</a>
+    <a class="logo" href="/">Quiz Mania</a>
     <div class="header-right">
-        <a class="active" href="">Home</a>
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
+        <a class="active" href="/">Home</a>
+        <div sec:authorize="isAnonymous()">
+            <a href="/login/">Login</a>
+            <a href="/register/">Register</a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}">Log out</a>
+        </div>
     </div>
 </div>
 <h1>Quiz Mania</h1>
@@ -26,7 +30,7 @@
     <form th:action="@{/create}">
         <button class="btn">Create</button>
     </form>
-</div>
 
+</div>
 </body>
 </html>
