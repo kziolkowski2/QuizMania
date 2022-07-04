@@ -29,7 +29,7 @@
                      th:text="'Points: ' + ${session.givenAnswers[questionStat.index].second} + '/' + ${question.points}"></div>
             </div>
             
-            <div th:if="${question.questionType == T(com.Quizmania.Quizmania.domain.QuestionTypeEnum).SINGLE || question.questionType == T(com.Quizmania.Quizmania.domain.QuestionTypeEnum).MULTIPLE}"
+            <div th:if="${question.questionType == T(com.Quizmania.Quizmania.domain.QuestionTypeEnum).SINGLE || question.questionType == T(com.Quizmania.Quizmania.domain.QuestionTypeEnum).MULTIPLE || question.questionType == T(com.Quizmania.Quizmania.domain.QuestionTypeEnum).TF}"
                  class="option-list" th:each="answer : ${question.answerList}">
                 <div th:if="${answer.isCorrect() eq true}">
                     <div class="review-option" th:classappend="${#lists.contains(session.givenAnswers[questionStat.index].first, answer.content) ? 'correct picked' : ''}">

@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/search.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 <body>
 <div class="header">
@@ -57,7 +59,7 @@
             <tr th:each="quiz:${quizzes}">
                 <td><i></i></td>
                 <td>
-                    <a th:href="@{'/quiz/' + ${quiz.id} + '/game'}">
+                    <a class="quiz-btn" th:href="@{'/quiz/' + ${quiz.id} + '/game'}">
                         <div th:text="${quiz.name}"></div>
                     </a>
                 </td>
@@ -70,20 +72,24 @@
             </tbody>
         </table>
 
-        <footer style="font-size: large" class="page-panel">
+        <footer class="page-panel">
             <nav>
                 <ul class="pagination">
                     <li class="page-item">
                         <span class = "enabled" th:if="${currentPage > 1}">
                             <a th:if="${keyword == null}">
                                <a th:if="${sortDir == null}"
+                                  class="page-btn"
                                  th:href="@{'/search/1'}">First</a>
                                <a th:unless="${sortDir == null}"
+                                  class="page-btn"
                                   th:href="@{'/search/1/' + ${field} + '?sortDir=' + ${sortDir}}">First</a></a>
                             <a th:unless="${keyword == null}">
                                <a th:if="${sortDir == null}"
+                                  class="page-btn"
                                   th:href="@{'/search/1' + '?keyword=' + ${keyword}}">First</a>
                                <a th:unless="${sortDir == null}"
+                                  class="page-btn"
                                   th:href="@{'/search/1/' + ${field} + '?sortDir=' + ${sortDir} + '&keyword=' + ${keyword}}">First</a></a></span>
                         <span class="disabled" th:unless="${currentPage > 1}">First</span>
                     </li>
@@ -92,42 +98,64 @@
                         <span class = "enabled" th:if="${currentPage > 1}">
                             <a th:if="${keyword == null}">
                                <a th:if="${sortDir == null}"
+                                  class="page-btn"
                                   th:href="@{'/search/' + ${currentPage - 1}}">Previous</a>
                                <a th:unless="${sortDir == null}"
+                                  class="page-btn"
                                   th:href="@{'/search/' + ${currentPage - 1} + '/' + ${field} + '?sortDir=' + ${sortDir}}">Previous</a></a>
                             <a th:unless="${keyword == null}">
                                <a th:if="${sortDir == null}"
+                                  class="page-btn"
                                   th:href="@{'/search/' + ${currentPage - 1} + '?keyword=' + ${keyword}}">Previous</a>
                                <a th:unless="${sortDir == null}"
+                                  class="page-btn"
                                   th:href="@{'/search/' + ${currentPage - 1} + '/' + ${field} + '?sortDir=' + ${sortDir} + '&keyword=' + ${keyword}}">Previous</a></a></span>
                         <span class="disabled" th:unless="${currentPage > 1}">Previous</span>
                     </li>
 
                     <li class="page-item">
-                       <span class = "enabled" th:each="i: ${#numbers.sequence(1, totalPages)}">
-                            <a th:if="${keyword == null}">
+                       <span class = "enabled" th:each="i: ${#numbers.sequence(
+                       (((currentPage - 2) <= 1) ? 1 : currentPage - 2), 
+                       (((currentPage + 2) >= totalPages) ? totalPages : currentPage + 2))}" 
+                             th:classappend="${i == currentPage} ? 'current' : '' ">
+                            <a th:if="${keyword == null} ">
                                <a th:if="${sortDir == null}"
-                                  th:href="@{'/search/' + ${i}}">[[${i}]]</a>
-                               <a th:unless="${sortDir == null}"
-                                  th:href="@{'/search/' + ${i} + '/' + ${field} + '?sortDir=' + ${sortDir}}">[[${i}]]</a></a>
-                            <a th:unless="${keyword == null}">
+                                  class="page-btn"
+                                  th:href="@{'/search/' + ${i}}">[[${i}]]
+                               </a>
+                               <a th:unless="${sortDir == null} "
+                                  class="page-btn"
+                                  th:href="@{'/search/' + ${i} + '/' + ${field} + '?sortDir=' + ${sortDir}}">[[${i}]]
+                               </a>
+                            </a>
+                            <a th:unless="${keyword == null}"> 
                                <a th:if="${sortDir == null}"
-                                  th:href="@{'/search/' + ${i} + '?keyword=' + ${keyword}}">[[${i}]]</a>
+                                  class="page-btn"
+                                  th:href="@{'/search/' + ${i} + '?keyword=' + ${keyword}}">[[${i}]]
+                               </a>
                                <a th:unless="${sortDir == null}"
-                                  th:href="@{'/search/' + ${i} + '/' + ${field} + '?sortDir=' + ${sortDir} + '&keyword=' + ${keyword}}">[[${i}]]</a></a></span>
+                                  class="page-btn"
+                                  th:href="@{'/search/' + ${i} + '/' + ${field} + '?sortDir=' + ${sortDir} + '&keyword=' + ${keyword}}">[[${i}]]
+                               </a>
+                            </a>
+                       </span>
                     </li>
 
                     <li class="page-item">
                         <span class = "enabled" th:if="${currentPage < totalPages}">
                             <a th:if="${keyword == null}">
                                <a th:if="${sortDir == null}"
+                                  class="page-btn"
                                   th:href="@{'/search/' + ${currentPage + 1}}">Next</a>
                                <a th:unless="${sortDir == null}"
+                                  class="page-btn"
                                   th:href="@{'/search/' + ${currentPage + 1} + '/' + ${field} + '?sortDir=' + ${sortDir}}">Next</a></a>
                             <a th:unless="${keyword == null}">
                                <a th:if="${sortDir == null}"
+                                  class="page-btn"
                                   th:href="@{'/search/' + ${currentPage + 1} + '?keyword=' + ${keyword}}">Next</a>
                                <a th:unless="${sortDir == null}"
+                                  class="page-btn"
                                   th:href="@{'/search/' + ${currentPage + 1} + '/' + ${field} + '?sortDir=' + ${sortDir} + '&keyword=' + ${keyword}}">Next</a></a></span>
                         <span class="disabled" th:unless="${currentPage < totalPages}">Next</span>
                     </li>
@@ -136,13 +164,17 @@
                         <span class = "enabled" th:if="${currentPage < totalPages}">
                             <a th:if="${keyword == null}">
                                <a th:if="${sortDir == null}"
+                                  class="page-btn"
                                   th:href="@{'/search/' + ${totalPages}}">Last</a>
                                <a th:unless="${sortDir == null}"
+                                  class="page-btn"
                                   th:href="@{'/search/' + ${totalPages} + '/' + ${field} + '?sortDir=' + ${sortDir}}">Last</a></a>
                             <a th:unless="${keyword == null}">
                                <a th:if="${sortDir == null}"
+                                  class="page-btn"
                                   th:href="@{'/search/' + ${totalPages} + '?keyword=' + ${keyword}}">Last</a>
                                <a th:unless="${sortDir == null}"
+                                  class="page-btn"
                                   th:href="@{'/search/' + ${totalPages} + '/' + ${field} + '?sortDir=' + ${sortDir} + '&keyword=' + ${keyword}}">Last</a></a></span>
                         <span class="disabled" th:unless="${currentPage < totalPages}">Last</span>
                     </li>
@@ -153,5 +185,18 @@
         </footer>
     </section>
 </div>
+<script>
+$(document).ready(function() {
+    $(".content").hide().fadeIn(200);
+
+    $(".quiz-btn").click(function(e) {
+        e.preventDefault();
+        let link = $(this).attr("href");
+        $(".content").fadeOut(200,function(){
+            window.location =  link;
+        });
+    });
+});
+</script>
 </body>
 </html>

@@ -20,11 +20,11 @@ public class Question {
     private QuestionTypeEnum questionType;
     @NotNull
     private int points;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "quiz_id") //moze byc problem z wielka litera w nazwie
+    @ManyToOne
+    @JoinColumn(name = "quiz_id") 
     private Quiz parentQuiz;
     @JsonIgnore
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @OneToMany
     private List<Answer> answerList = new ArrayList<>();
 
     public Question() {

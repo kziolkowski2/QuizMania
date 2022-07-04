@@ -8,7 +8,10 @@
     <link rel="stylesheet" th:href="@{/css/play.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+
 </head>
 <body>
 <div class="header">
@@ -19,6 +22,7 @@
         <a href="/register/">Register</a>
     </div>
 </div>
+<div class="content">
 <div class="quiz-box">
     <div class="quiz-title" th:text="${quiz.name}"></div>
     <input type="hidden" id="indx" value="${session.questionIndex}" />
@@ -27,8 +31,21 @@
         <div class="que-title">
             <div class="que-text" th:text="${quiz.questionList[session.questionIndex].content}" ></div>
             <div class="countdown">
-                <div class="base-timer">
-                    <span id="countdown-number" class="base-timer__label"></span>
+                <div class="timer">
+                    <svg class="timer-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+
+                        <g class="timer-circle">
+                            <circle class="timer-full" cx="50" cy="50" r="43"
+                                    fill="none" stroke="none"
+                            ></circle>
+                            <circle id="timer__remaining"  class="timer-remaining" cx="50" cy="50" r="43"
+                                    fill="none" stroke="none"
+                            ></circle>
+
+                        </g>
+
+                    </svg>
+                    <span id="timer__text" class="timer-text"></span>
                 </div>
             </div>
         </div>
@@ -55,6 +72,22 @@
                 <button type="submit" class="option" th:text="Next"></button>
             </form>
         </div>
+        <div th:if="${quiz.questionList[session.questionIndex].questionType == T(com.Quizmania.Quizmania.domain.QuestionTypeEnum).TF}">
+            <form th:action="@{'/quiz/'+ ${quiz.id} +'/play/submit'}" th:object="${quiz}" method="post" >
+                <div class="tf-option-list" th:each="answer : ${quiz.questionList[session.questionIndex].answerList}">
+                    <a class = "tf-content" th:text="${answer.content}"></a>
+                    <label>
+                        <input type="checkbox" name="content" class="option-true" th:value="${answer.content}"/>
+                        <a for="content" th:text="'True'"></a>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="content" class="option-false" th:value="null"/>
+                        <a for="content" th:text="'False'"></a>
+                    </label>
+                </div>
+                <button type="submit" class="option" th:text="Next"></button>
+            </form>
+        </div>
         <div th:if="${quiz.questionList[session.questionIndex].questionType == T(com.Quizmania.Quizmania.domain.QuestionTypeEnum).OPEN}"
              class="option-list">
             <form th:action="@{'/quiz/'+ ${quiz.id} +'/play/submitopen'}"  method="post" >
@@ -63,34 +96,60 @@
             </form>
         </div>
     </section>
+    <div class="progress">
+        <div class="w3-light-grey w3-round">
+            <div class="w3-container w3-round w3-blue" style="width:25%">25%</div>
+        </div>
+    </div>
 </div>
-
+</div>
 <script>
-    if ([[${session.questionIndex}]] == 0){
-        sessionStorage.setItem("time", 60 * [[${quiz.timeLimit}]]);
-        timerInterval = null;
-    }
-    let time = sessionStorage.getItem("time");
-    let timeLimit = time;
-    let circleSize = 283;
+    $('.tf-option-list').find('input').on('change', function() {
+        $(this).parent().parent().find('input').not(this).prop('checked', false);
+    });
     
+    $(document).ready(function() {
+        $(".content").hide().fadeIn(200);
+    });
+    if ([[${session.questionIndex}]] == 0){
+        sessionStorage.setItem("time", 60 * [[${quiz.timeLimit}]])
+    }
+    timerInterval = null;
+
+    let time = sessionStorage.getItem("time");
+    let timeLimit = 60 * [[${quiz.timeLimit}]];
+    const circleSize = 270;
+    
+    setCircleDasharray();
     update();
     timerInterval = setInterval(update, 1000);
     
     function update(){
-      const minutes= Math.floor(time / 60);
-      let seconds = time % 60;
-      
-      seconds = seconds < 10 ? '0' + seconds : seconds;
-
-      document.getElementById('countdown-number').innerHTML = minutes + ":" + seconds;
-      time--;
-      if(time <= 0){
-          location.replace("/quiz/" + [[${quiz.id}]] + "/timeout");
-      }
-      sessionStorage.setItem("time", time)
+        time--;
+        const minutes= Math.floor(time / 60);
+        let seconds = time % 60;
+        
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        
+        document.getElementById('timer__text').innerHTML = minutes + ":" + seconds;
+        setCircleDasharray();
+        if(time <= 0){
+            window.location.replace("/quiz/" + [[${quiz.id}]] + "/timeout");
+        }
+        sessionStorage.setItem("time", time)
     }
-    
+    function calculateTimeFraction() {
+        let rawTimeFraction = time / timeLimit;
+        return rawTimeFraction - (1 / timeLimit) * (1 - rawTimeFraction);
+    }
+    function setCircleDasharray() {
+        let circleDasharray = `${(
+            calculateTimeFraction() * circleSize
+        ).toFixed(0)} 270`;
+        document
+            .getElementById("timer__remaining")
+            .setAttribute("stroke-dasharray", circleDasharray);
+    }
 </script>
 </body>
 </html>

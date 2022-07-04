@@ -6,7 +6,9 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
-
+.content{
+    display:none;
+}
 .header {
     overflow: hidden;
     background-color: white;
@@ -60,14 +62,15 @@ body{
     background: white;
     display:flex;
     flex-direction: row;
-    width: 500px;
-    height: 40px;
+    width: 520px;
+    height: 45px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius:5px;
 }
 
 .search-input{
+    font-size: 15px;
     width:100%;
     padding: 10px 45px 10px 15px;
     border-radius: 5px;
@@ -97,7 +100,7 @@ body{
     background:#eeeeee;
 }
 .quiz-panel{
-    margin: 50px auto;
+    margin: 90px auto;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -106,7 +109,7 @@ body{
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background: #fff;
     border-radius: 5px;
-    width: 800px;
+    width: 1000px;
     height: auto;
 }
 
@@ -170,7 +173,7 @@ body{
 
 .quiz-table tbody tr:nth-of-type(even) {
 
-    background-color: aliceblue;
+    background-color: #f7fbff;
 }
 .quiz-table tbody tr:first-of-type {
     border-top: 1px solid #dddddd;
@@ -190,7 +193,7 @@ body{
     padding: 10px 15px;
     background-color: #eeeeee;
     border-radius: 5px;
-
+    font-size:18px;
 }
 .pagination {
     padding-left: 0;
@@ -204,8 +207,9 @@ body{
 .pagination > li {
     display: inline;
 }
-.pagination > li > a,
-.pagination > li > span {
+
+.page-btn,
+.pagination > li > .disabled{
     float: left;
     padding: 6px 12px;
     line-height: 1.428571429;
@@ -213,9 +217,7 @@ body{
     background-color: #ffffff;
     border: 1px solid #dddddd;
     margin-left: -1px;
-
 }
-
 .enabled > a {
     color: black;
     text-decoration:none;
@@ -225,10 +227,16 @@ body{
     text-decoration:none;
 }
 
-.pagination > li > .enabled:hover {
+.pagination > li > .enabled > .page-btn:hover {
     color: black;
     text-decoration:none;
     background-color: #dddddd;
+    transition: all 0.1s ease-in-out;
+
+}
+.pagination > li > .current >.page-btn {
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.20);
+    background-color: #fefefe;
 }
 .page-panel .count{
     display: flex;

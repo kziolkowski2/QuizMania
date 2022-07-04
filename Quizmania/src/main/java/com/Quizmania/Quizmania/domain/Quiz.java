@@ -28,7 +28,6 @@ public class Quiz {
     private LocalDate date; //data dodania
     @JsonIgnore
     @OneToMany
-    @JoinColumn (name = "quiz_id")
     private List<Question> questionList;
 
     public Quiz() {

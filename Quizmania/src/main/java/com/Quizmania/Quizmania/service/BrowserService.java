@@ -37,15 +37,15 @@ public class BrowserService {
         return quizRepository.findAll();
     }
 
-    public Page<Quiz> findPageByKeyword(String keyword, int pageNumber){
-        Pageable pageable = PageRequest.of(pageNumber - 1,5);
+    public Page<Quiz> findPageByKeyword(String keyword, int page){
+        Pageable pageable = PageRequest.of(page - 1,8);
         return quizRepository.findByNameContaining(keyword, pageable);
     }
 
-    public Page<Quiz> findPageByKeywordWithSort(String keyword, String field, String direction, int pageNumber) {
+    public Page<Quiz> findPageByKeywordWithSort(String keyword, String field, String direction, int page) {
         Sort sort = direction.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
                 Sort.by(field).ascending() : Sort.by(field).descending();
-        Pageable pageable = PageRequest.of(pageNumber - 1, 5, sort);
+        Pageable pageable = PageRequest.of(page - 1, 8, sort);
         return quizRepository.findByNameContaining(keyword, pageable);
     }
 }

@@ -13,7 +13,7 @@ public class Answer {
     private String content;
     @NotNull
     private boolean isCorrect;//do dodania relacje z odpowiedziami itp
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "question_id")
     private Question question;
 

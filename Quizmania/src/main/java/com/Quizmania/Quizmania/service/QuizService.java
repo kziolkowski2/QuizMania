@@ -49,19 +49,7 @@ public class QuizService {
     public Optional<Question> findQuestionById(Long id){
         return questionRepository.findById(id);
     }
-
-    public Page<Quiz> findPageByKeyword(String keyword, int pageNumber){
-        Pageable pageable = PageRequest.of(pageNumber - 1,5);
-        return quizRepository.findByNameContaining(keyword, pageable);
-    }
-
-    public Page<Quiz> findPageByKeywordWithSort(String keyword, String field, String direction, int pageNumber) {
-        Sort sort = direction.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
-                Sort.by(field).ascending() : Sort.by(field).descending();
-        Pageable pageable = PageRequest.of(pageNumber - 1, 5, sort);
-        return quizRepository.findByNameContaining(keyword, pageable);
-    }
-
+    
     public Quiz save(Quiz quiz) {
         //quiz.setCreatedBy(user);
         return quizRepository.save(quiz);
@@ -72,7 +60,7 @@ public class QuizService {
         LocalDate date2 = LocalDate.of(2020, 2, 25);
         List<Question> questions1 = new ArrayList<>();
         List<Question> questions2 = new ArrayList<>();
-        Quiz quiz1 = new Quiz("Przykładowy quiz", 0.25f, CategoryEnum.MATEMATYKA, LanguageEnum.PL, date1, questions1 );
+        Quiz quiz1 = new Quiz("Przykładowy quiz", 15.5f, CategoryEnum.MATEMATYKA, LanguageEnum.PL, date1, questions1 );
         Quiz quiz2 = new Quiz("quiz 2", 0, CategoryEnum.HISTORIA, LanguageEnum.EN, date2, questions2 );
         Quiz quiz3 = new Quiz("quiz 3");
         Quiz quiz4 = new Quiz("quiz 4");
@@ -92,9 +80,13 @@ public class QuizService {
         List<Answer> answers1 = new ArrayList<>();
         List<Answer> answers2 = new ArrayList<>();
         List<Answer> answers3 = new ArrayList<>();
+        List<Answer> answers4 = new ArrayList<>();
+
         Question question1 = new Question("Ile to 1+1?", QuestionTypeEnum.SINGLE, 1,  quiz1, answers1);
         Question question2 = new Question("Które miasto jest stolicą Boliwii? (Wybierz wszystkie poprawne odpowiedzi)", QuestionTypeEnum.MULTIPLE, 1, quiz1, answers2);
         Question question3 = new Question("Symbol pierwiastka sodu to?", QuestionTypeEnum.OPEN, 2, quiz1, answers3);
+        Question question4 = new Question("Symbol pierwiastka sodu to?", QuestionTypeEnum.TF, 2, quiz1, answers4);
+
 
         //Question question3 = new Question("question3", QuestionTypeEnum.OPEN, quiz2, answers2);
         //Question question4 = new Question("question4", QuestionTypeEnum.OPEN, quiz2, answers2);
@@ -108,8 +100,10 @@ public class QuizService {
         Answer answer6 = new Answer("Warszawa", false, question2);
 
         Answer answer7 = new Answer("Na", true, question3);
-        //Answer answer8 = new Answer("1", false, question2);
-        //Answer answer9 = new Answer("3", false, question2);
+        
+        Answer answer8 = new Answer("Sucre", true, question4);
+        Answer answer9 = new Answer("La Paz", true, question4);
+        Answer answer10 = new Answer("Warszawa", false, question4);
 
         answers1.add(answer1);
         answers1.add(answer2);
@@ -120,21 +114,41 @@ public class QuizService {
         answers2.add(answer6);
 
         answers3.add(answer7);
-        //answers3.add(answer8);
-        //answers3.add(answer9);
+        
+        answers4.add(answer8);
+        answers4.add(answer9);
+        answers4.add(answer10);
 
         question1.setAnswerList(answers1);
         question2.setAnswerList(answers2);
         question3.setAnswerList(answers3);
-        //question4.setAnswerList(answers2);
+        question4.setAnswerList(answers4);
 
         questions1.add(question1);
         questions1.add(question2);
         questions1.add(question3);
-        //questions2.add(question4);
+        questions1.add(question4);
 
         quiz1.setQuestionList(questions1);
         quiz2.setQuestionList(questions2);
+        
+
+        answerRepository.save(answer1);
+        answerRepository.save(answer2);
+        answerRepository.save(answer3);
+        answerRepository.save(answer4);
+        answerRepository.save(answer5);
+        answerRepository.save(answer6);
+        answerRepository.save(answer7);
+        answerRepository.save(answer8);
+        answerRepository.save(answer9);
+        answerRepository.save(answer10);
+
+
+        questionRepository.save(question1);
+        questionRepository.save(question2);
+        questionRepository.save(question3);
+        questionRepository.save(question4);
 
         quizRepository.save(quiz1);
         quizRepository.save(quiz2);
@@ -151,25 +165,6 @@ public class QuizService {
         quizRepository.save(quiz13);
         quizRepository.save(quiz14);
         quizRepository.save(quiz15);
-        
-        questionRepository.save(question1);
-        questionRepository.save(question2);
-        questionRepository.save(question3);
-        
-        answerRepository.save(answer1);
-        answerRepository.save(answer2);
-        answerRepository.save(answer3);
-        answerRepository.save(answer4);
-        answerRepository.save(answer5);
-        answerRepository.save(answer6);
-        answerRepository.save(answer7);
-        //answerRepository.save(answer8);
-        //answerRepository.save(answer9);
-        
-        //questionRepository.save(question3);
-        //questionRepository.save(question4);
-        
-
     }
 
 }

@@ -3,7 +3,8 @@ package com.Quizmania.Quizmania.domain;
 public enum QuestionTypeEnum {
     OPEN("open"),
     SINGLE("single"),
-    MULTIPLE("multiple");
+    MULTIPLE("multiple"),
+    TF("true/false");
 
     private final String text;
 
