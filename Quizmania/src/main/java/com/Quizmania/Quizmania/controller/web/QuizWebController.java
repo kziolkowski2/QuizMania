@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 import static java.lang.Math.*;
 
-@Controller 
+@Controller
 public class QuizWebController {
     final QuizService quizService;
     public QuizWebController(QuizService quizService){
@@ -36,9 +36,7 @@ public class QuizWebController {
     UserRepository userRepo;
 
     @GetMapping("/")
-    public String home(HttpSession session) { 
-        session.invalidate();
-        return "home"; }
+    public String home(HttpSession session) { return "home"; }
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -60,7 +58,7 @@ public class QuizWebController {
 
         userRepo.save(user);
 
-        return "register_success";
+        return "/home";
     }
 
     @GetMapping("/users")
@@ -106,10 +104,10 @@ public class QuizWebController {
 
         return "redirect:/createQuiz";
     }
-    
+
     @GetMapping("/quiz/{id}/game")
     public String playQuizInit(Model model,
-                           @PathVariable("id") Long id, HttpSession session) {
+                               @PathVariable("id") Long id, HttpSession session) {
         Quiz quiz = quizService.find(id).get();
         quiz.incrementPopularity();
         quizService.save(quiz);
@@ -132,21 +130,21 @@ public class QuizWebController {
         correctAnswers.retainAll(allCorrect);
         float p = (question.getPoints()/ (float)allCorrect.size()) * correctAnswers.size();
         int total = new BigDecimal(p-sk).setScale(0, RoundingMode.HALF_DOWN).intValue();
-        
+
         ((List<Pair>)session.getAttribute("givenAnswers")).add(Pair.of(content, max(0, total)));
 
         session.setAttribute("givenAnswers", session.getAttribute("givenAnswers"));
         return "redirect:/quiz/{id}/play";
-    } 
+    }
     @PostMapping("/quiz/{id}/play/submitopen")
     public String submitOpen(@PathVariable("id") Long id,
-                         @RequestParam(name = "content", defaultValue = "") String content,
-                         HttpSession session){
+                             @RequestParam(name = "content", defaultValue = "") String content,
+                             HttpSession session){
         Question question = quizService.findQuestion(id, (Integer)session.getAttribute("questionIndex"));
         //if(question.getAnswerList().stream().anyMatch(a -> a.getContent().equals(content))){
 
         if(question.getAnswerList().get(0).getContent().equals(content)){
-            
+
             ((List<Pair>)session.getAttribute("givenAnswers")).add(Pair.of(content, question.getPoints()));
         }
         else {
@@ -155,11 +153,11 @@ public class QuizWebController {
         session.setAttribute("givenAnswers", session.getAttribute("givenAnswers"));
         return "redirect:/quiz/{id}/play";
     }
-    
+
     @GetMapping("/quiz/{id}/play")
     public String playQuiz(Model model,
                            @PathVariable("id") Long id, HttpSession session) {
-        Quiz quiz = quizService.find(id).get();         
+        Quiz quiz = quizService.find(id).get();
         model.addAttribute("quiz", quiz);
         session.setAttribute("questionIndex",((Integer)session.getAttribute("questionIndex"))+1);
 
@@ -177,10 +175,10 @@ public class QuizWebController {
     }
     @GetMapping("/quiz/{id}/timeout")
     public String timeout(Model model,
-                           @PathVariable("id") Long id, HttpSession session) {
+                          @PathVariable("id") Long id, HttpSession session) {
         Quiz quiz = quizService.find(id).get();
         model.addAttribute("quiz", quiz);
-        
+
         int score = ((List<Pair>)session.getAttribute("givenAnswers")).stream().mapToInt(a -> (int) a.getSecond()).sum();
         int size = quiz.getQuestionList().size() - ((List<?>) session.getAttribute("givenAnswers")).size();
         for(int i = 0; i<=size; i++) {
@@ -188,6 +186,6 @@ public class QuizWebController {
         }
         model.addAttribute("score", score);
         return "result";
-        
+
     }
 }

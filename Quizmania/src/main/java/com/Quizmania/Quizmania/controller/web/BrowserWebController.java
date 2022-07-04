@@ -22,7 +22,7 @@ public class BrowserWebController {
     public BrowserWebController(BrowserService browserService){
         this.browserService = browserService;
     }
-    
+
     @GetMapping("/search/{pageNumber}")
     public String getSearchPage(Model model, @PathVariable("pageNumber") int currentPage,
                                 @RequestParam(value = "keyword", required = false) String keyword) {
