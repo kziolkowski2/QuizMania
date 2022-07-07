@@ -6,7 +6,9 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
-
+.content{
+    display:none;
+}
 .header {
     overflow: hidden;
     background-color: white;
@@ -52,7 +54,9 @@
 .header-right {
     float: right;
 }
-
+.header-right div{
+    display:flex;
+}
 body{
     /*background: #007bff;*/
     background: dodgerblue;
@@ -85,10 +89,11 @@ h1{
 }
 
 .btn {
-    font-size: 45px;
+    margin-top:10px;
+    font-size: 30px;
     font-weight: 500;
     color: #007bff;
-    padding: 15px 100px;
+    padding: 15px 80px;
     outline: none;
     border: none;
     border-radius: 5px;
@@ -101,9 +106,22 @@ h1{
 .btn:hover {
     transform: scale(1.1);
 }
+.login-panel{
+    margin: 90px auto;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
+    background: dodgerblue;
+    border-radius: 5px;
+    width: 800px;
+    height: 500px;
+}
 .form-group{
-    margin: 50px auto;
+    transform: scale(1.3);
+
+    margin: 70px auto;
     background: white;
     display:flex;
     flex-direction: row;
@@ -113,7 +131,17 @@ h1{
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius:5px;
 }
-
+input-box{
+    margin: 50px auto;
+    background: white;
+    display:flex;
+    flex-direction: row;
+    width: 520px;
+    height: 45px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius:5px;
+}
 .form-control{
     width:100%;
     padding: 10px 15px 10px 15px;

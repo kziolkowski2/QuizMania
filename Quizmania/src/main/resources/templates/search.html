@@ -15,8 +15,8 @@
     <div class="header-right">
         <a class="active" href="/">Home</a>
         <div sec:authorize="isAnonymous()">
-            <a href="/login/">Login</a>
-            <a href="/register/">Register</a>
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
         </div>
         <div sec:authorize="isAuthenticated()">
             <a th:href="@{/logout}">Log out</a>

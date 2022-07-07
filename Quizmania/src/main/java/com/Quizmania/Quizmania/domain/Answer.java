@@ -36,10 +36,11 @@ public class Answer {
         this.content = content;
         this.isCorrect = isCorrect;
     }
-    public Answer(String content, String isCorrect) {
+    public Answer(String content, String isCorrect, Question question) {
         this.content = content;
         boolean b = Boolean.parseBoolean(isCorrect);
         this.isCorrect = b;
+        this.question = question;
     }
 
 

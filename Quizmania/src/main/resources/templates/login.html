@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/login.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 <body>
 <div class="header">
@@ -13,8 +15,8 @@
     <div class="header-right">
         <a class="active" href="/">Home</a>
         <div sec:authorize="isAnonymous()">
-            <a href="/login/">Login</a>
-            <a href="/register/">Register</a>
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
         </div>
         <div sec:authorize="isAuthenticated()">
             <a th:href="@{/logout}">Log out</a>
@@ -25,18 +27,18 @@
     Text visible only to authenticated users.
 </div>
 <div class="content">
+    <div class="login-panel">
     <form name='f' action="" method='post' style="max-width: 600px; margin: 0 auto;">
         <div class="m-3">
             <div class="form-group row">
-                <label class="col-4 col-form-label">E-mail: </label>
-                <div class="col-8">
-                    <input type='text' name='email' value='' class="form-control">
+                <div class="input-box">
+                    <input type="text" name='email' placeholder="E-mail" class="form-control" value='' autocomplete="off"/>
+
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-4 col-form-label">Password: </label>
-                <div class="col-8">
-                    <input type='password' name='password' class="form-control">
+                <div class="input-box">
+                    <input type="password"  name='password' placeholder="Password" class="form-control" value='' autocomplete="off"/>
                 </div>
             </div>
             <div class="btn-group">
@@ -44,6 +46,12 @@
             </div>
         </div>
     </form>
+    </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $(".content").hide().fadeIn(200);
+    });
+</script>
 </body>
 </html>

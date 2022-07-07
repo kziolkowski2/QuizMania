@@ -97,7 +97,7 @@ public class Question {
         this.answerList.add(answer);
     }
     public void addAnswerToListString(String content,String isCorrect){
-        this.answerList.add(new Answer(content,isCorrect));
+        this.answerList.add(new Answer(content,isCorrect,this));
     }
 
 

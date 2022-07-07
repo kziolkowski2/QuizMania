@@ -60,7 +60,7 @@ public class QuizService {
         LocalDate date2 = LocalDate.of(2020, 2, 25);
         List<Question> questions1 = new ArrayList<>();
         List<Question> questions2 = new ArrayList<>();
-        Quiz quiz1 = new Quiz("Przykładowy quiz", 15.5f, CategoryEnum.MATEMATYKA, LanguageEnum.PL, date1, questions1 );
+        Quiz quiz1 = new Quiz("Przykładowy quiz", 0.75f, CategoryEnum.MATEMATYKA, LanguageEnum.PL, date1, questions1 );
         Quiz quiz2 = new Quiz("quiz 2", 0, CategoryEnum.HISTORIA, LanguageEnum.EN, date2, questions2 );
         Quiz quiz3 = new Quiz("quiz 3");
         Quiz quiz4 = new Quiz("quiz 4");
@@ -85,7 +85,7 @@ public class QuizService {
         Question question1 = new Question("Ile to 1+1?", QuestionTypeEnum.SINGLE, 1,  quiz1, answers1);
         Question question2 = new Question("Które miasto jest stolicą Boliwii? (Wybierz wszystkie poprawne odpowiedzi)", QuestionTypeEnum.MULTIPLE, 1, quiz1, answers2);
         Question question3 = new Question("Symbol pierwiastka sodu to?", QuestionTypeEnum.OPEN, 2, quiz1, answers3);
-        Question question4 = new Question("Symbol pierwiastka sodu to?", QuestionTypeEnum.TF, 2, quiz1, answers4);
+        Question question4 = new Question("Określ prawdziwość poniższych stwierdzeń", QuestionTypeEnum.TF, 2, quiz1, answers4);
 
 
         //Question question3 = new Question("question3", QuestionTypeEnum.OPEN, quiz2, answers2);
@@ -101,9 +101,9 @@ public class QuizService {
 
         Answer answer7 = new Answer("Na", true, question3);
         
-        Answer answer8 = new Answer("Sucre", true, question4);
-        Answer answer9 = new Answer("La Paz", true, question4);
-        Answer answer10 = new Answer("Warszawa", false, question4);
+        Answer answer8 = new Answer("Czy delfin to ssak?", true, question4);
+        Answer answer9 = new Answer("Czy Burj Khalifa to najwyższy budynek świata", true, question4);
+        Answer answer10 = new Answer("Czy Paryż to stolica Czech?", false, question4);
 
         answers1.add(answer1);
         answers1.add(answer2);

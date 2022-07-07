@@ -97,7 +97,7 @@ public class QuizWebController {
     public String createQuestionPost(Question question, HttpServletRequest request){
         String[] answersContent = request.getParameterValues("answerContent");
         String[] isCorrect = request.getParameterValues("answerIsCorrect");
-        for(int i= 0; i < 3; i++){
+        for(int i= 0; i < answersContent.length; i++){
             question.addAnswerToListString(answersContent[i],isCorrect[i]);
         }
         quizService.save(question);

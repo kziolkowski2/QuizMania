@@ -1,48 +1,65 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Sign Up - CodeJava</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <title>Quiz Mania</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/register.css}">
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="container text-center">
-    <div>
-        <h1>User Registration - Sign Up</h1>
+<div class="header">
+    <a class="logo" href="/">Quiz Mania</a>
+    <div class="header-right">
+        <a class="active" href="/">Home</a>
+        <div sec:authorize="isAnonymous()">
+            <a href="/login/">Login</a>
+            <a href="/register/">Register</a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}">Log out</a>
+        </div>
     </div>
+</div>
+<div class="content">
+    <div class="login-panel">
     <form th:action="@{/process_register}" th:object="${user}"
           method="post" style="max-width: 600px; margin: 0 auto;">
         <div class="m-3">
             <div class="form-group row">
-                <label class="col-4 col-form-label">E-mail: </label>
-                <div class="col-8">
-                    <input type="email" th:field="*{email}" class="form-control" required />
+                <div class="input-box">
+                    <input type="email" th:field="*{email}" placeholder="E-mail" class="form-control" required autocomplete="off"/>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-4 col-form-label">Password: </label>
-                <div class="col-8">
-                    <input type="password" th:field="*{password}" class="form-control"
-                           required minlength="6" maxlength="10"/>
+                <div class="input-box">
+                    <input type="password" th:field="*{password}" placeholder="Password:" class="form-control" required autocomplete="off"
+                           minlength="6" maxlength="10"/>
+
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-4 col-form-label">Nickname: </label>
-                <div class="col-8">
-                    <input type="text" th:field="*{nickname}" class="form-control"
-                           required minlength="2" maxlength="20"/>
+                <div class="input-box">
+                    <input type="text" th:field="*{nickname}" placeholder="Nickname:" class="form-control" required autocomplete="off"
+                           minlength="2" maxlength="20"/>
                 </div>
             </div>
 
-            <div>
+            <div class="btn-group">
                 <button type="submit" class="btn btn-primary">Sign Up</button>
             </div>
         </div>
     </form>
+    </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $(".content").hide().fadeIn(200);
+    });
+</script>
 </body>
 </html>

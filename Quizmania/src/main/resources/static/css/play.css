@@ -53,6 +53,9 @@
 .header-right {
     float: right;
 }
+.header-right div{
+    display:flex;
+}
 body{
     background: dodgerblue;
 }
