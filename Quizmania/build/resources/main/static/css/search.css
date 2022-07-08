@@ -52,6 +52,9 @@
 .header-right {
     float: right;
 }
+.header-right div{
+    display:flex;
+}
 body{
     /*background: #007bff;*/
     background: dodgerblue;

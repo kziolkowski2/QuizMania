@@ -97,8 +97,8 @@ public class QuizService {
         List<Answer> answers4 = new ArrayList<>();
 
         Question question1 = new Question("Ile to 1+1?", QuestionTypeEnum.SINGLE, 1,  quiz1, answers1);
-        Question question2 = new Question("Które miasto jest stolicą Boliwii? (Wybierz wszystkie poprawne odpowiedzi)", QuestionTypeEnum.MULTIPLE, 1, quiz1, answers2);
-        Question question3 = new Question("Symbol pierwiastka sodu to?", QuestionTypeEnum.OPEN, 2, quiz1, answers3);
+        Question question2 = new Question("Które miasto jest stolicą Boliwii? (Wybierz wszystkie poprawne odpowiedzi)", QuestionTypeEnum.MULTIPLE, 2, quiz1, answers2);
+        Question question3 = new Question("Symbol pierwiastka sodu to?", QuestionTypeEnum.OPEN, 1, quiz1, answers3);
         Question question4 = new Question("Określ prawdziwość poniższych stwierdzeń", QuestionTypeEnum.TF, 2, quiz1, answers4);
 
 

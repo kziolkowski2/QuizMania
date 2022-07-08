@@ -141,12 +141,17 @@ public class QuizWebController {
         Question question = quizService.findQuestion(id, (Integer)session.getAttribute("questionIndex"));
         float all = (float)question.getAnswerList().size();
         List<String> allCorrect = question.getAnswerList().stream().filter(a -> a.isCorrect() == true).map(Answer::getContent).collect(Collectors.toList());
+
+        while (content.remove("")) {
+        }
+
         float b = allCorrect.size()/all;
         float sk = max(0, ((content.size()/ all) - b) * (question.getPoints()/(1 - b)));
         List<String> correctAnswers = new ArrayList<>(content) ;
         correctAnswers.retainAll(allCorrect);
         float p = (question.getPoints()/ (float)allCorrect.size()) * correctAnswers.size();
         int total = new BigDecimal(p-sk).setScale(0, RoundingMode.HALF_DOWN).intValue();
+        System.out.println(total);
 
         ((List<Pair>)session.getAttribute("givenAnswers")).add(Pair.of(content, max(0, total)));
 

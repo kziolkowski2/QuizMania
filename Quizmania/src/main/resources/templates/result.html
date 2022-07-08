@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Quiz Mania</title>
     <meta charset="UTF-8">
@@ -14,8 +14,13 @@
     <a class="logo" href="/">Quiz Mania</a>
     <div class="header-right">
         <a class="active" href="/">Home</a>
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
+        <div sec:authorize="isAnonymous()">
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}">Log out</a>
+        </div>
     </div>
 </div>
 <div class="quiz-box">
@@ -29,23 +34,7 @@
                      th:text="'Points: ' + ${session.givenAnswers[questionStat.index].second} + '/' + ${question.points}"></div>
             </div>
             
-            <div th:if="${question.questionType == T(com.Quizmania.Quizmania.domain.QuestionTypeEnum).SINGLE || question.questionType == T(com.Quizmania.Quizmania.domain.QuestionTypeEnum).MULTIPLE || question.questionType == T(com.Quizmania.Quizmania.domain.QuestionTypeEnum).TF}"
-                 class="option-list" th:each="answer : ${question.answerList}">
-                <div th:if="${answer.isCorrect() eq true}">
-                    <div class="review-option" th:classappend="${#lists.contains(session.givenAnswers[questionStat.index].first, answer.content) ? 'correct picked' : ''}">
-                        <div th:text="${answer.content}"></div>
-                        <i th:classappend="'fa fa-check'"></i>
-                    </div>
-                </div>
-                <div th:unless="${answer.isCorrect() eq true}" th:with="isPicked = ${#lists.contains(session.givenAnswers[questionStat.index].first, answer.content)}">
-                    <div class="review-option" th:classappend="${isPicked ? 'wrong picked' : ''}">
-                        <div th:text="${answer.content}"></div>
-                        <i th:classappend="${isPicked ? 'fa fa-close' : ''}"></i>
-                    </div>
-                </div>
-            </div>
-            
-            <div th:if="${question.questionType == T(com.Quizmania.Quizmania.domain.QuestionTypeEnum).OPEN}" 
+            <div th:if="${question.questionType == T(com.Quizmania.Quizmania.domain.QuestionTypeEnum).OPEN}"
                  class="option-list" th:with="answer = ${question.answerList.get(0).content}">
                 <div th:if="${answer eq session.givenAnswers[questionStat.index].first}">
                     <div class="review-option" th:classappend="'correct picked'">
@@ -68,6 +57,24 @@
                     </div>
                 </div>
             </div>
+            
+            <div th:unless="${question.questionType == T(com.Quizmania.Quizmania.domain.QuestionTypeEnum).OPEN}"
+                 class="option-list" th:each="answer : ${question.answerList}">
+                <div th:if="${answer.isCorrect() eq true}">
+                    <div class="review-option" th:classappend="${#lists.contains(session.givenAnswers[questionStat.index].first, answer.content) ? 'correct picked' : ''}">
+                        <div th:text="${answer.content}"></div>
+                        <i th:classappend="'fa fa-check'"></i>
+                    </div>
+                </div>
+                <div th:unless="${answer.isCorrect() eq true}" th:with="isPicked = ${#lists.contains(session.givenAnswers[questionStat.index].first, answer.content)}">
+                    <div class="review-option" th:classappend="${isPicked ? 'wrong picked' : ''}">
+                        <div th:text="${answer.content}"></div>
+                        <i th:classappend="${isPicked ? 'fa fa-close' : ''}"></i>
+                    </div>
+                </div>
+            </div>
+            
+           
             
         </div>
     </section>

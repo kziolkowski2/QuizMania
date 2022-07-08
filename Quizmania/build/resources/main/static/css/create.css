@@ -1,3 +1,4 @@
+/* importing google fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 *{
     margin: 0;
@@ -5,7 +6,9 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
-
+.content{
+    display:none;
+}
 .header {
     overflow: hidden;
     background-color: white;
@@ -51,7 +54,86 @@
 .header-right {
     float: right;
 }
-
+.header-right div{
+    display:flex;
+}
 body{
-    background: #007bff;
+    /*background: #007bff;*/
+    background: dodgerblue;
+}
+
+h1{
+    font-weight: bold;
+    font-size: 180px;
+    color: black;
+    text-align: center;
+    position: absolute;
+    top: 20%;
+    left:0;
+    right:0;
+    margin:0 auto;
+
+}
+
+.btn-group{
+    display:inline-flex;
+    position: absolute;
+    top:60%;
+    gap:180px;
+    margin-top:8%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+
+}
+
+.btn {
+    margin-top:280px;
+    font-size: 30px;
+    font-weight: 500;
+    color: #007bff;
+    padding: 15px 80px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: all 0.3s ease-in-out;
+}
+.btn:hover {
+    transform: scale(1.1);
+}
+.login-panel{
+    margin: 90px auto;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background: dodgerblue;
+    border-radius: 5px;
+    width: 800px;
+    height: 500px;
+}
+
+input-box{
+    margin: 50px auto;
+    background: white;
+    display:flex;
+    flex-direction: row;
+    width: 520px;
+    height: 45px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius:5px;
+}
+.form-control{
+    width:100%;
+    padding: 10px 15px 10px 15px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
 }
