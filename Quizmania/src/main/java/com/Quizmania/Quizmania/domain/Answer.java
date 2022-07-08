@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 public class Answer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     private String content;
@@ -35,6 +35,7 @@ public class Answer {
     public Answer(String content, boolean isCorrect) {
         this.content = content;
         this.isCorrect = isCorrect;
+
     }
     public Answer(String content, String isCorrect, Question question) {
         this.content = content;

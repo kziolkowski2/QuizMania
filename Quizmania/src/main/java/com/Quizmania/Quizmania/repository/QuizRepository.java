@@ -12,4 +12,6 @@ import java.util.List;
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
 
     Page<Quiz> findByNameContaining(String keyword, Pageable pageable);
+
+    Quiz findByName(String name);
 }

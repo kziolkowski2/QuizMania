@@ -70,39 +70,56 @@ public class QuizWebController {
     }
 
     @GetMapping("/create")
-    public String creation(){
+    public String creation(Model model){
         return "create";
     }
-
     @GetMapping("/createQuiz")
-    public String createQuizForm(Model model) {
-        List<Question> questionList = quizService.findAllUnassignedQuestions();
-        model.addAttribute("questionList",questionList);
-        model.addAttribute("quiz",new Quiz());
+    public String createQuiz(String quizName){ return createQuizFormPrepare(quizName);}
 
-        return "createQuiz"; }
+    @PostMapping
+    public String createQuizFormPrepare(@RequestParam(value = "quizName", required = false) String quizName) {
+        Long id = quizService.save(new Quiz(quizName)).getId();
+        return "redirect:/createQuiz/" + id;
+    }
 
-    @PostMapping("/createQuiz/save")
-    public String createQuizPost(Quiz quiz){
+    @GetMapping("/createQuiz/{id}")
+    public String createQuizFormFinal(Quiz quizWithList,@PathVariable(value = "id", required = false) Long id, Model model){
+        Quiz quiz = quizService.find(id).get();
+        model.addAttribute("categories", CategoryEnum.values());
+        model.addAttribute("language",LanguageEnum.values());
+        model.addAttribute("questionType",QuestionTypeEnum.values());
+        model.addAttribute("quiz",quiz);
+        model.addAttribute("questionList",quiz.getQuestionList());
+        model.addAttribute("question",new Question());
+        return "createQuiz";
+    }
+
+    @PostMapping("/createQuiz/{id}/save")
+    public String createQuizPost(Quiz quiz,@PathVariable("id")Long id){
+        Quiz tempQuiz = quizService.find(id).get();
+        quiz.setQuestionList(tempQuiz.getQuestionList());
         quizService.save(quiz);
         return "redirect:/search";
     }
-    @GetMapping("/createQuestion")
-    public String createQuestionForm(Model model){
-        model.addAttribute("question",new Question());
-        return"createQuestion";
 
+    @GetMapping("/createQuiz/{quizId}/Question/delete/{questionId}")
+    public String deleteQuestionFromQuiz(@PathVariable("quizId") Long quizId,@PathVariable("questionId")Long questionId){
+        quizService.deleteQuestionById(questionId);
+        return "redirect:/createQuiz/"+quizId;
     }
-    @PostMapping("/createQuestion/save")
-    public String createQuestionPost(Question question, HttpServletRequest request){
+
+
+    @PostMapping({"/createQuestion/{id}/save"})
+    public String createQuestionPost(@PathVariable("id") Long id, Question question, HttpServletRequest request){
+        Quiz quiz  = quizService.find(id).get();
         String[] answersContent = request.getParameterValues("answerContent");
         String[] isCorrect = request.getParameterValues("answerIsCorrect");
         for(int i= 0; i < answersContent.length; i++){
             question.addAnswerToListString(answersContent[i],isCorrect[i]);
         }
+        question.setParentQuiz(quiz);
         quizService.save(question);
-
-        return "redirect:/createQuiz";
+        return "redirect:/createQuiz/"+quiz.getId();
     }
 
     @GetMapping("/quiz/{id}/game")

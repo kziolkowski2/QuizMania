@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 public class Quiz {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Nullable
     private String name; // nazwa zestawu
@@ -20,15 +20,16 @@ public class Quiz {
     @NotNull
     private int maxPoints;
     @NotNull
-    private CategoryEnum category; // kategoria pyta�
+    private CategoryEnum category;
     @NotNull
-    private LanguageEnum language; // j�zyk pyta� i odpowiedzi w zestawie
+    private LanguageEnum language;
     @Nullable
-    private int popularity = 0;  //popularno�� (ilo�� wy�wietle�)
-    private LocalDate date; //data dodania
+    private int popularity = 0;
+    private LocalDate date;
     @JsonIgnore
     @OneToMany
-    private List<Question> questionList;
+    @JoinColumn (name = "quiz_id")
+    private List<Question> questionList = new ArrayList<>();
 
     public Quiz() {
         this.name = "";
@@ -37,8 +38,6 @@ public class Quiz {
         this.language = LanguageEnum.PL;
         this.popularity = 0;
         this.date = LocalDate.now();
-        List<Question> tempQuestionList = new ArrayList<>();
-        this.questionList = tempQuestionList;
     }
     public Quiz(@Nullable String name, float timeLimit, CategoryEnum category, LanguageEnum language, LocalDate date, List<Question> questionList) {
         this.name = name;
@@ -49,8 +48,13 @@ public class Quiz {
         this.questionList = questionList;
         this.maxPoints = questionList.stream().mapToInt(q -> q.getPoints()).sum();
     }
-    public Quiz(@Nullable String name) {
+    public Quiz(String name) {
         this.name = name;
+        this.timeLimit = 0;
+        this.category = CategoryEnum.MATEMATYKA;
+        this.language = LanguageEnum.PL;
+        this.popularity = 0;
+        this.date = LocalDate.now();
     }
 
 

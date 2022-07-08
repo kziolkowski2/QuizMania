@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Quiz</title>
-    <link rel="stylesheet" th:href="@{/css/create.css}">
-
+    <link rel="stylesheet" th:href="@{/css/createQuiz.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <div class="header">
@@ -23,27 +23,84 @@
 </div>
 <div class="create_box">
 </div>
-<form action="#" th:action="@{'/createQuiz/save'}" th:object="${quiz}" method="post">
-    <div class="form-group">
-        <div class="form-group row"><label>Name</label>
-            <input type="text" th:field="${quiz.name}">
-        </div>
-
-        <div class="form-group row"><label>Questions choose multiple</label>
-            <select th:field="${questionList}" class="form-control" multiple="multiple" required>
-                <th:block th:each="que:${questionList}">
-                    <option th:text="${que.content}" th:value="${que.Id}"/>
-                </th:block>
-            </select>
-        </div>
-
-
-
-
-
-        <button type="submit">Submit</button>
-    </div>
+<form th:action="@{'/createQuiz/'+${quiz.id}+'/save'}" th:object="${quiz}" method="post">
+    <table class="blueTable">
+        <thead>
+        <tr>
+        <td><label>Name:</label><br><input type="text" th:field="${quiz.name}" name="name"></td>
+        <td><label>Time Limit(in seconds):</label><input type="integer" th:field="${quiz.timeLimit}" name="timeLimit"></td>
+            <td>
+                <select required>
+                    <option value="0">Select Category</option>
+                    <option th:each="category : ${categories}"  th:value="${category}" th:text="${category}"></option>
+                </select>
+            </td>
+            <td>
+                <select required>
+                    <option value="0">Select Language</option>
+                    <option th:each="lan : ${language}" th:value="${lan}" th:text="${lan}"></option>
+                </select>
+            </td>
+        </tr>
+        </thead>
+    </table>
+    <button type="submit">Submit</button><br>
 </form>
-</body>
+    <form th:action="@{'/createQuestion/'+${quiz.id}+'/save'}" th:object="${question} "method="post">
+    <table id="formTable" class="blueTable">
+        <thead>
+        <tr>
+            <td><input type="text" th:field="${question.content}" placeholder="Question content" required></td>
+            <td>
+                <select required>
+                    <option value="0">Select type</option>
+                    <option th:each="option : ${questionType}" th:value="${option}" th:text="${option}"></option>
+                </select>
+            </td>
+            <td><input type="number" th:value="${question.points}" name="points" placeholder="points"></td>
+            <td><button class="btn" type="submit" name="addQuestion"><i class="fa-solid fa-circle-plus"></i></i>Add this Question to Quiz</button></td>
+        </thead>
+        <tbody id="answerPartTable">
+        </tbody>
+        <input type="button" class="add-answer" value="Add New Answer">
+    </table>
+    <input type="button" class="delete-answer-one" value="Remove selected single answers answers">
+    </form>
 
+<table class="blueTable">
+    <thead>
+    <tr>
+        <td>Nr</td>
+        <td>Already added questions</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="question, status:${questionList}">
+        <td width="20%">#[[${status.count}]]</td>
+        <td width="50%" th:text="${question.content}"></td>
+        <td><a th:href="@{'/createQuiz/'+${quiz.id}+'/Question/delete/'+${question.id}}">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    var recordAnswer=1;
+    $(document).ready(function(){
+        $(".add-answer").click(function(){
+            var markup = '<tr><td><input type="text" name="answerContent" placeholder="Answer ' + recordAnswer + ' Content"></td><td><input type="text" name="answerIsCorrect"></td><td><input type="checkbox" name="recordAnswer"> Delete Single </td></tr>'
+            $("#answerPartTable").append(markup);
+            recordAnswer++;
+        });
+        $(".delete-answer-one").click(function(){
+            $("table tbody").find('input[name="recordAnswer"]').each(function(){
+                if($(this).is(":checked")){
+                    $(this).parents("tr").remove();
+                    recordAnswer--;
+                }
+            });
+        });
+    });
+</script>
 </html>

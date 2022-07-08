@@ -27,14 +27,21 @@ public class QuizService {
         this.quizRepository = quizRepository;
     }
 
+    public Quiz findByName(String name){
+        return quizRepository.findByName(name);
+    }
     public Optional<Quiz> find(Long id){
         return quizRepository.findById(id);
     }
     public Question findQuestion(Long id, int questionIndex){
         return quizRepository.findById(id).get().getQuestionList().get(questionIndex);
     }
+
     public Question save(Question question){
         return questionRepository.save(question);
+    }
+    public void setQuestionListToQuiz(Quiz quiz,ArrayList<Question> list){
+        quiz.setQuestionList(list);
     }
     public Iterable<Question> findAllQuestions(){
         return questionRepository.findAll();
@@ -50,11 +57,18 @@ public class QuizService {
         return questionRepository.findById(id);
     }
     
+    public Quiz saveWithList(Quiz quiz,List<Question> questionList) {
+        quiz.setQuestionList(questionList);
+        //quiz.setCreatedBy(user);
+        return quizRepository.save(quiz);
+    }
     public Quiz save(Quiz quiz) {
         //quiz.setCreatedBy(user);
         return quizRepository.save(quiz);
     }
-
+    public void deleteQuestionById(Long id){
+        questionRepository.deleteById(id);
+    }
     public void initialize() {
         LocalDate date1 = LocalDate.of(2022, 4, 16);
         LocalDate date2 = LocalDate.of(2020, 2, 25);
@@ -166,5 +180,6 @@ public class QuizService {
         quizRepository.save(quiz14);
         quizRepository.save(quiz15);
     }
+
 
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 public class Question {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     private String content;
@@ -21,23 +21,26 @@ public class Question {
     @NotNull
     private int points;
     @ManyToOne
-    @JoinColumn(name = "quiz_id") 
+    @JoinColumn(name = "quiz_id")
     private Quiz parentQuiz;
     @JsonIgnore
-    @OneToMany
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answerList = new ArrayList<>();
 
     public Question() {
         this.content = "";
         this.questionType = QuestionTypeEnum.SINGLE;
+        this.points = 1;
         List<Answer> tempAnswerList = new ArrayList<>();
         this.answerList = tempAnswerList;
-    }
+        }
 
-    public Question(String content, QuestionTypeEnum questionType, List<Answer> answerList) {
+    public Question(String content, int points) {
         this.content = content;
-        this.questionType = questionType;
-        this.answerList = answerList;
+        this.questionType = QuestionTypeEnum.SINGLE;
+        this.points = points;
+        List<Answer> tempAnswerList = new ArrayList<>();
+        this.answerList = tempAnswerList;
     }
 
     public Question(String content, QuestionTypeEnum questionType, int points, Quiz parentQuiz, List<Answer> answerList) {
@@ -81,8 +84,8 @@ public class Question {
         return parentQuiz;
     }
 
-    public void setParentQuiz(Quiz parentQuiz) {
-        this.parentQuiz = parentQuiz;
+    public void setParentQuiz(Quiz quiz) {
+        this.parentQuiz = quiz;
     }
 
     public List<Answer> getAnswerList() {

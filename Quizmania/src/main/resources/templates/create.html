@@ -21,15 +21,12 @@
         </div>
     </div>
 </div>
-<div class="container text-center">
+<div>
     <div><h1>Creation Tool</h1></div>
-    <form th:action="@{/createQuiz}">
-        <button class="btn">Create Quiz</button>
+    <form th:action="@{/createQuiz}" class="search-form">
+        <input type="text" placeholder="Name of Quiz" name="quizName" class="search-input" th:value="*{quizName}" autocomplete="off">
+        <button class="btn">Add New Quiz</button>
     </form>
-    <form th:action="@{/createQuestion}">
-        <button class="btn">Add New Question</button>
-    </form>
-
 </div>
 </body>
 
