@@ -4,6 +4,7 @@ import com.Quizmania.Quizmania.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.util.Pair;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -70,24 +71,25 @@ public class QuizWebController {
     }
 
     @GetMapping("/create")
-    public String creation(Model model){
+    public String creation(Model model,HttpServletRequest request){
+        String email=request.getUserPrincipal().getName();
+        model.addAttribute("usersQuizzes",userRepo.findByEmail(email).getYourQuizzes());
         return "create";
     }
     @GetMapping("/createQuiz")
-    public String createQuiz(String quizName){ return createQuizFormPrepare(quizName);}
+    public String createQuiz(String quizName, HttpServletRequest request){
+        String email=request.getUserPrincipal().getName();
+        return createQuizFormPrepare(quizName,email);}
 
     @PostMapping
-    public String createQuizFormPrepare(@RequestParam(value = "quizName", required = false) String quizName) {
-        Long id = quizService.save(new Quiz(quizName)).getId();
+    public String createQuizFormPrepare(@RequestParam(value = "quizName", required = false) String quizName,String email) {
+        Long id = quizService.save(new Quiz(quizName,userRepo.findByEmail(email))).getId();
         return "redirect:/createQuiz/" + id;
     }
 
     @GetMapping("/createQuiz/{id}")
     public String createQuizFormFinal(Quiz quizWithList,@PathVariable(value = "id", required = false) Long id, Model model){
         Quiz quiz = quizService.find(id).get();
-        model.addAttribute("categories", CategoryEnum.values());
-        model.addAttribute("language",LanguageEnum.values());
-        model.addAttribute("questionType",QuestionTypeEnum.values());
         model.addAttribute("quiz",quiz);
         model.addAttribute("questionList",quiz.getQuestionList());
         model.addAttribute("question",new Question());
@@ -98,6 +100,7 @@ public class QuizWebController {
     public String createQuizPost(Quiz quiz,@PathVariable("id")Long id){
         Quiz tempQuiz = quizService.find(id).get();
         quiz.setQuestionList(tempQuiz.getQuestionList());
+        quiz.setUser(tempQuiz.getCreatedByUser());
         quizService.save(quiz);
         return "redirect:/search";
     }

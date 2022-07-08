@@ -10,8 +10,7 @@ public enum LanguageEnum {
         this.text = text;
     }
 
-    @Override
-    public String toString() {
+    public String getDisplayValue(){
         return text;
     }
 }

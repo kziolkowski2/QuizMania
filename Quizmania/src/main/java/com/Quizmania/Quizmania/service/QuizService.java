@@ -69,6 +69,9 @@ public class QuizService {
     public void deleteQuestionById(Long id){
         questionRepository.deleteById(id);
     }
+    public void deleteAnswerById(Long id){
+        answerRepository.deleteById(id);
+    }
     public void initialize() {
         LocalDate date1 = LocalDate.of(2022, 4, 16);
         LocalDate date2 = LocalDate.of(2020, 2, 25);

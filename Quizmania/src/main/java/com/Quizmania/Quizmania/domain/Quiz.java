@@ -14,7 +14,7 @@ public class Quiz {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Nullable
-    private String name; // nazwa zestawu
+    private String name;
     @Nullable
     private float timeLimit;
     @NotNull
@@ -26,10 +26,18 @@ public class Quiz {
     @Nullable
     private int popularity = 0;
     private LocalDate date;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @Nullable
+    private User user;
     @JsonIgnore
     @OneToMany
     @JoinColumn (name = "quiz_id")
     private List<Question> questionList = new ArrayList<>();
+
+    public User getCreatedByUser() {
+        return user;
+    }
 
     public Quiz() {
         this.name = "";
@@ -37,6 +45,7 @@ public class Quiz {
         this.category = CategoryEnum.MATEMATYKA;
         this.language = LanguageEnum.PL;
         this.popularity = 0;
+        this.user= null;
         this.date = LocalDate.now();
     }
     public Quiz(@Nullable String name, float timeLimit, CategoryEnum category, LanguageEnum language, LocalDate date, List<Question> questionList) {
@@ -56,7 +65,19 @@ public class Quiz {
         this.popularity = 0;
         this.date = LocalDate.now();
     }
+    public Quiz(String name, User user) {
+        this.name = name;
+        this.timeLimit = 0;
+        this.category = CategoryEnum.MATEMATYKA;
+        this.language = LanguageEnum.PL;
+        this.user = user;
+        this.popularity = 0;
+        this.date = LocalDate.now();
+    }
 
+    public void setUser(@Nullable User user) {
+        this.user = user;
+    }
 
     public void addQuestionToList(Question question){
         this.questionList.add(question);

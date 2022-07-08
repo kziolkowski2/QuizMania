@@ -27,18 +27,19 @@
     <table class="blueTable">
         <thead>
         <tr>
-        <td><label>Name:</label><br><input type="text" th:field="${quiz.name}" name="name"></td>
-        <td><label>Time Limit(in seconds):</label><input type="integer" th:field="${quiz.timeLimit}" name="timeLimit"></td>
+            <td><label>Name:</label><br><input type="text" th:field="${quiz.name}" name="name"></td>
+            <td><label>Time Limit(in minutes):</label><input type="integer" th:field="${quiz.timeLimit}" name="timeLimit"></td>
+            <td><label>Max points:</label><input type="integer" th:field="${quiz.maxPoints}" name="maxPoints"></td>
             <td>
-                <select required>
+                <select th:field="*{category}" required>
                     <option value="0">Select Category</option>
-                    <option th:each="category : ${categories}"  th:value="${category}" th:text="${category}"></option>
+                    <option th:each="category : ${T(com.Quizmania.Quizmania.domain.CategoryEnum).values()}"  th:value="${category}" th:text="${category.getDisplayValue()}"></option>
                 </select>
             </td>
             <td>
-                <select required>
-                    <option value="0">Select Language</option>
-                    <option th:each="lan : ${language}" th:value="${lan}" th:text="${lan}"></option>
+                <select th:field="*{language}" required>
+                    <option value="0">Select Category</option>
+                    <option th:each="lan : ${T(com.Quizmania.Quizmania.domain.LanguageEnum).values()}"  th:value="${lan}" th:text="${lan.getDisplayValue()}"></option>
                 </select>
             </td>
         </tr>
@@ -52,9 +53,9 @@
         <tr>
             <td><input type="text" th:field="${question.content}" placeholder="Question content" required></td>
             <td>
-                <select required>
-                    <option value="0">Select type</option>
-                    <option th:each="option : ${questionType}" th:value="${option}" th:text="${option}"></option>
+                <select th:field="*{questionType}" required>
+                    <option value="0">Select Question Type</option>
+                    <option th:each="qT : ${T(com.Quizmania.Quizmania.domain.QuestionTypeEnum).values()}"  th:value="${qT}" th:text="${qT.getDisplayValue()}"></option>
                 </select>
             </td>
             <td><input type="number" th:value="${question.points}" name="points" placeholder="points"></td>
@@ -66,7 +67,6 @@
     </table>
     <input type="button" class="delete-answer-one" value="Remove selected single answers answers">
     </form>
-
 <table class="blueTable">
     <thead>
     <tr>

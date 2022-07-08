@@ -1,6 +1,10 @@
 package com.Quizmania.Quizmania.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -18,6 +22,15 @@ public class User {
 
     @Column(name = "nickname", nullable = false, length = 20)
     private String nickname;
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name="user_id")
+    @Column(name="yourQuizzes", nullable = false)
+    private List<Quiz> yourQuizzes = new ArrayList<Quiz>();
+
+    public List<Quiz> getYourQuizzes() {
+        return yourQuizzes;
+    }
 
     public Long getId() {
         return id;

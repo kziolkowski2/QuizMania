@@ -13,8 +13,7 @@ public enum CategoryEnum {
         this.text = text;
     }
 
-    @Override
-    public String toString() {
+    public String getDisplayValue(){
         return text;
     }
 }

@@ -12,7 +12,7 @@ public enum QuestionTypeEnum {
         this.text = text;
     }
 
-    public String getDisplayValue() {
+    public String getDisplayValue(){
         return text;
     }
 }
