@@ -124,6 +124,11 @@ public class QuizWebController {
         quizService.save(question);
         return "redirect:/createQuiz/"+quiz.getId();
     }
+    @GetMapping("/deleteQuiz/{id}")
+    public String deleteQuiz(@PathVariable("id")Long id){
+        quizService.deleteQuiz(id);
+        return "redirect:/create";
+    }
 
     @GetMapping("/quiz/{id}/game")
     public String playQuizInit(Model model,
