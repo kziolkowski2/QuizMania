@@ -30,12 +30,14 @@
             <td><label>Name:</label><br><input type="text" th:field="${quiz.name}" name="name" required></td>
             <td><label>Time Limit(in minutes):</label><input type="number" min="0.1" step="0.1" oninput="validity.valid||(value='');" th:field="${quiz.timeLimit}" name="timeLimit"></td>
             <td>
+                <label>Category:</label>
                 <select th:field="*{category}" required>
                     <option value="0">Select Category</option>
                     <option th:each="category : ${T(com.Quizmania.Quizmania.domain.CategoryEnum).values()}"  th:value="${category}" th:text="${category.getDisplayValue()}"></option>
                 </select>
             </td>
             <td>
+                <label>Language:</label>
                 <select th:field="*{language}" required>
                     <option value="0">Select Category</option>
                     <option th:each="lan : ${T(com.Quizmania.Quizmania.domain.LanguageEnum).values()}"  th:value="${lan}" th:text="${lan.getDisplayValue()}"></option>
@@ -58,7 +60,7 @@
                 </select>
             </td>
             <td><input type="number" min="0" oninput="validity.valid||(value='');" th:value="${question.points}" name="points" placeholder="points"></td>
-            <td><button class="btn" type="submit" name="addQuestion"><i class="fa-solid fa-circle-plus"></i></i>Add this Question to Quiz</button></td>
+            <td><button class="btn" onclick="myFunction()" id="testowo" type="submit" name="addQuestion"><i class="fa-solid fa-circle-plus"></i></i>Add this Question to Quiz</button></td>
         </thead>
         <tbody id="answerPartTable">
         </tbody>
@@ -77,7 +79,7 @@
     <tr th:each="question, status:${questionList}">
         <td width="20%">#[[${status.count}]]</td>
         <td width="50%" th:text="${question.content}"></td>
-        <td><a th:href="@{'/Question/delete/'+${question.id}}">Delete</a></td>
+        <td><a th:href="@{'/createQuiz/'+${quiz.id}+'/Question/delete/'+${question.id}}">Delete</a></td>
     </tr>
     </tbody>
 </table>
@@ -87,7 +89,7 @@
     var recordAnswer=1;
     $(document).ready(function(){
         $(".add-answer").click(function(){
-            var markup = '<tr><td><input type="text" name="answerContent" placeholder="Answer ' + recordAnswer + ' Content"></td><td><select  name="answerIsCorrect" required><option value="True">True</option><option value="False">False</option></select></td></tr>'
+            var markup = '<tr><td><input type="text" name="answerContent" placeholder="Answer ' + recordAnswer + ' Content"></td><td><select  name="answerIsCorrect" required><option value="True">True</option><option value="False">False</option></select></td><td><input type="checkbox" name="recordAnswer"> Delete Single </td></tr>'
             $("#answerPartTable").append(markup);
             recordAnswer++;
         });
