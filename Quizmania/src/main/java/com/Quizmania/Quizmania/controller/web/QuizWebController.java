@@ -161,7 +161,7 @@ public class QuizWebController {
         float p = (question.getPoints()/ (float)allCorrect.size()) * correctAnswers.size();
         int total = new BigDecimal(p-sk).setScale(0, RoundingMode.HALF_DOWN).intValue();
         System.out.println(total);
-
+        
         ((List<Pair>)session.getAttribute("givenAnswers")).add(Pair.of(content, max(0, total)));
 
         session.setAttribute("givenAnswers", session.getAttribute("givenAnswers"));

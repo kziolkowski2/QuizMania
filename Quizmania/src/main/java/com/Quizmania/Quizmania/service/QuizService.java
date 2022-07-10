@@ -81,20 +81,20 @@ public class QuizService {
         List<Question> questions1 = new ArrayList<>();
         List<Question> questions2 = new ArrayList<>();
         Quiz quiz1 = new Quiz("Przykładowy quiz", 0.75f, CategoryEnum.MATEMATYKA, LanguageEnum.PL, date1, questions1 );
-        Quiz quiz2 = new Quiz("quiz 2", 0, CategoryEnum.HISTORIA, LanguageEnum.EN, date2, questions2 );
-        Quiz quiz3 = new Quiz("quiz 3");
-        Quiz quiz4 = new Quiz("quiz 4");
-        Quiz quiz5 = new Quiz("quiz 5");
-        Quiz quiz6 = new Quiz("quiz 6");
-        Quiz quiz7 = new Quiz("quiz 7");
-        Quiz quiz8 = new Quiz("quiz 8");
-        Quiz quiz9 = new Quiz("quiz 9");
-        Quiz quiz10 = new Quiz("quiz 10");
-        Quiz quiz11 = new Quiz("quiz 11");
-        Quiz quiz12 = new Quiz("quiz 12");
-        Quiz quiz13 = new Quiz("quiz 13");
-        Quiz quiz14 = new Quiz("quiz 14");
-        Quiz quiz15 = new Quiz("quiz 15");
+        Quiz quiz2 = new Quiz("Przykładowy quiz 2", 0, CategoryEnum.HISTORIA, LanguageEnum.EN, date2, questions2 );
+        Quiz quiz3 = new Quiz("Przykładowy quiz 3");
+        Quiz quiz4 = new Quiz("Przykładowy quiz 4");
+        Quiz quiz5 = new Quiz("Przykładowy quiz 5");
+        Quiz quiz6 = new Quiz("Przykładowy quiz 6");
+        Quiz quiz7 = new Quiz("Przykładowy quiz 7");
+        Quiz quiz8 = new Quiz("Przykładowy quiz 8");
+        Quiz quiz9 = new Quiz("Przykładowy quiz 9");
+        Quiz quiz10 = new Quiz("Przykładowy quiz 10");
+        Quiz quiz11 = new Quiz("Przykładowy quiz 11");
+        Quiz quiz12 = new Quiz("Przykładowy quiz 12");
+        Quiz quiz13 = new Quiz("Przykładowy quiz 13");
+        Quiz quiz14 = new Quiz("Przykładowy quiz 14");
+        Quiz quiz15 = new Quiz("Przykładowy quiz 15");
 
 
         List<Answer> answers1 = new ArrayList<>();

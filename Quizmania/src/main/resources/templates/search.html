@@ -68,8 +68,8 @@
                         <div th:text="${quiz.name}"></div>
                     </a>
                 </td>
-                <td th:text="${quiz.category}"></td>
-                <td th:text="${quiz.language}"></td>
+                <td th:text="${quiz.category.displayValue}"></td>
+                <td th:text="${quiz.language.displayValue}"></td>
                 <td th:text="${quiz.date}"></td>
                 <td th:text="${quiz.popularity}"></td>
                 <td><i></i></td>

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Create Quiz</title>
     <link rel="stylesheet" th:href="@{/css/create.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
 <body>
@@ -21,29 +22,51 @@
         </div>
     </div>
 </div>
-<div>
-    <div><h1>Creation Tool</h1></div>
+<div class="content">
     <form th:action="@{/createQuiz}" class="search-form">
-        <input type="text" placeholder="Name of Quiz" name="quizName" class="search-input" th:value="*{quizName}" autocomplete="off" required>
-        <button class="btn">Add New Quiz</button>
+        <input type="hidden" placeholder="Name of Quiz" name="quizName" class="search-input" th:value="*{quizName}" autocomplete="off" >
+        <button class="btn">Create New Quiz</button>
     </form>
-    <div sec:authorize="isAuthenticated()">
-        <table class="blueTable">
-            <thead>
-            <td>Nr</td>
-            <td>Name</td>
-            </thead>
-            <tbody>
-            <tr th:each="quiz, status:${usersQuizzes}">
-                <td width="20%">#[[${status.count}]]</td>
-                <td width="50%" th:text="${quiz.name}"></td>
-                <td><a th:href="@{'/createQuiz/'+${quiz.id}}">Edit Quiz</a></td>
-                <td><a th:href="@{'/deleteQuiz/'+${quiz.id}}">Delete Quiz</a></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <section class="quiz-panel">
+        <div sec:authorize="isAuthenticated()">
+            <table class="quiz-table">
+                <caption style="font-weight: bold">Your quizzes </caption>
+                <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="quiz, status:${usersQuizzes}">
+                    <td>#[[${status.count}]]</td>
+                    <td  th:text="${quiz.name}"></td>
+                    <td  th:text="${quiz.category}"></td>
+                    <td  th:text="${quiz.date}"></td>
+                    <td>
+                        <a th:href="@{'/deleteQuiz/'+${quiz.id}}"><button class="delete">Delete</button></a>
+                        <a th:href="@{'/createQuiz/'+${quiz.id}}"><button class="edit">Edit</button></a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(usersQuizzes)}">
+                    <td class="no-quizzes"
+                        colspan="6" style="text-align:center">
+                        No quizzes created yet
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 </div>
+<script>
+    $(document).ready(function() {
+        $(".content").hide().fadeIn(200);
+    });
+</script>
 </body>
 
 </html>

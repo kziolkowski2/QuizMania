@@ -6,10 +6,12 @@
     <title>Create Quiz</title>
     <link rel="stylesheet" th:href="@{/css/createQuiz.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 <body>
 <div class="header">
-    <a class="logo" href="/">Quiz Mania</a>z
+    <a class="logo" href="/">Quiz Mania</a>
     <div class="header-right">
         <a class="active" href="/">Home</a>
         <div sec:authorize="isAnonymous()">
@@ -21,70 +23,89 @@
         </div>
     </div>
 </div>
-<div class="create_box">
-</div>
-<form th:action="@{'/createQuiz/'+${quiz.id}+'/save'}" th:object="${quiz}" method="post">
-    <table class="blueTable">
-        <thead>
-        <tr>
-            <td><label>Name:</label><br><input type="text" th:field="${quiz.name}" name="name" required></td>
-            <td><label>Time Limit(in minutes):</label><input type="number" min="0.1" step="0.1" oninput="validity.valid||(value='');" th:field="${quiz.timeLimit}" name="timeLimit"></td>
-            <td>
-                <label>Category:</label>
-                <select th:field="*{category}" required>
+
+<div class="content">
+    <form class="quiz-form" th:action="@{'/createQuiz/'+${quiz.id}+'/save'}" th:object="${quiz}" method="post">
+    
+            <div>
+                <input class="quiz-input-title" type="text" th:field="${quiz.name}" name="name" required autocomplete="off" placeholder="Quiz Title">
+            </div><br>
+        <div class="form-flex">
+            <div>
+                <label>Time Limit(in minutes):</label><br>
+                <input class="quiz-input" type="number" min="0.1" step="0.1" oninput="validity.valid||(value='');" th:field="${quiz.timeLimit}" name="timeLimit">
+            </div>
+            <div>
+                <label>Category:</label><br>
+                <select class="quiz-input" th:field="*{category}" required>
                     <option value="0">Select Category</option>
                     <option th:each="category : ${T(com.Quizmania.Quizmania.domain.CategoryEnum).values()}"  th:value="${category}" th:text="${category.getDisplayValue()}"></option>
                 </select>
-            </td>
-            <td>
-                <label>Language:</label>
-                <select th:field="*{language}" required>
+            </div>
+            <div>
+                <label>Language:</label><br>
+                <select class="quiz-input" th:field="*{language}" required>
                     <option value="0">Select Category</option>
                     <option th:each="lan : ${T(com.Quizmania.Quizmania.domain.LanguageEnum).values()}"  th:value="${lan}" th:text="${lan.getDisplayValue()}"></option>
                 </select>
-            </td>
-        </tr>
-        </thead>
-    </table>
-    <button type="submit">Submit</button><br>
-</form>
-    <form th:action="@{'/createQuestion/'+${quiz.id}+'/save'}" th:object="${question} "method="post">
-    <table id="formTable" class="blueTable">
-        <thead>
-        <tr>
-            <td><input type="text" th:field="${question.content}" placeholder="Question content" required></td>
-            <td>
-                <select th:field="*{questionType}" required>
-                    <option value="0">Select Question Type</option>
-                    <option th:each="qT : ${T(com.Quizmania.Quizmania.domain.QuestionTypeEnum).values()}"  th:value="${qT}" th:text="${qT.getDisplayValue()}"></option>
-                </select>
-            </td>
-            <td><input type="number" min="0" oninput="validity.valid||(value='');" th:value="${question.points}" name="points" placeholder="points"></td>
-            <td><button class="btn" type="submit" name="addQuestion"><i class="fa-solid fa-circle-plus"></i></i>Add this Question to Quiz</button></td>
-        </thead>
-        <tbody id="answerPartTable">
-        </tbody>
-        <input type="button" class="add-answer" value="Add New Answer">
-    </table>
-    <input type="button" class="delete-answer-one" value="Remove selected single answers answers">
+            </div>
+        </div>
+        <div class="spacer">
+            &nbsp;
+        </div>
+        <button class="submit-quiz" type="submit">Submit Quiz</button>
     </form>
-<table class="blueTable">
-    <thead>
-    <tr>
-        <td>Nr</td>
-        <td>Already added questions</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="question, status:${questionList}">
-        <td width="20%">#[[${status.count}]]</td>
-        <td width="50%" th:text="${question.content}"></td>
-        <td><a th:href="@{'/createQuiz/'+${quiz.id}+'/Question/delete/'+${question.id}}">Delete</a></td>
-    </tr>
-    </tbody>
-</table>
+    <form class="question-form" th:action="@{'/createQuestion/'+${quiz.id}+'/save'}" th:object="${question} "method="post">
+        <section class="quiz-panel-questions">
+        <table id="formTable" class="quiz-table">
+            <thead>
+            <tr>
+                <td><input type="text" th:field="${question.content}" placeholder="Question content" required autocomplete="off"></td>
+                <td>
+                    <select th:field="*{questionType}" required>
+                        <option value="0">Select Question Type</option>
+                        <option th:each="qT : ${T(com.Quizmania.Quizmania.domain.QuestionTypeEnum).values()}"  th:value="${qT}" th:text="${qT.getDisplayValue()}"></option>
+                    </select>
+                </td>
+                <td><input type="number" min="0" oninput="validity.valid||(value='');" th:value="${question.points}" name="points" placeholder="points"></td>
+            </thead>
+            <tbody id="answerPartTable">
+            </tbody>
+        </table>
+        </section>
+        <button class="btn" type="submit" name="addQuestion"><i class="fa-solid fa-circle-plus"></i></i>Add this Question to Quiz</button>
+        <input type="button" class="add-answer" value="Add New Answer">
+    <input type="button" class="delete-answer-one" value="Remove selected answers">
+    </form>
+    <section class="quiz-panel">
+        <table class="quiz-table">
+            <caption style="font-weight: bold">Already added questions </caption>
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>Question</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="question, status:${questionList}">
+                <td>#[[${status.count}]]</td>
+                <td th:text="${question.content}"></td>
+                <td>
+                    <a th:href="@{'/createQuiz/'+${quiz.id}+'/Question/delete/'+${question.id}}"><button class="delete">Delete</button></a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(questionList)}">
+                <td class="no-questions"
+                    colspan="3" style="text-align:center">
+                    No questions added yet
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
     var recordAnswer=1;
     $(document).ready(function(){
@@ -101,6 +122,9 @@
                 }
             });
         });
+    });
+    $(document).ready(function() {
+        $(".content").hide().fadeIn(200);
     });
 </script>
 </html>

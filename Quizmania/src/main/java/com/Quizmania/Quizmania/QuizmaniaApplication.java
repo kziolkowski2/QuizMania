@@ -14,9 +14,9 @@ public class QuizmaniaApplication {
 		SpringApplication.run(QuizmaniaApplication.class, args);
 	}
 
-//	@Bean
-//	public CommandLineRunner setUpApp(@Autowired QuizService quizService) {
-//		return (args) -> quizService.initialize();
-//	}
+	@Bean
+	public CommandLineRunner setUpApp(@Autowired QuizService quizService) {
+		return (args) -> quizService.initialize();
+	}
 
 }
